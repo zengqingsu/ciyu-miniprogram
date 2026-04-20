@@ -11,7 +11,9 @@
     "pages/achievement/achievement",
     "pages/search/search",
     "pages/daily/daily",
-    "pages/plan/plan"
+    "pages/plan/plan",
+    "pages/review/review",
+    "pages/listen/listen"
   ],
   "window": {
     "navigationBarTitleText": "词途",

@@ -104,6 +104,22 @@
 }
 
 /* 按钮 */
+.review-btn {
+  background: #fa541c;
+  color: #fff;
+  border-radius: 12rpx;
+  font-size: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.listen-btn {
+  background: #2f54eb;
+  color: #fff;
+  border-radius: 12rpx;
+  font-size: 30rpx;
+  margin-bottom: 20rpx;
+}
+
 .plan-btn {
   background: #1890ff;
   color: #fff;

@@ -93,5 +93,19 @@ Page({
     wx.navigateTo({
       url: '/pages/plan/plan'
     });
+  },
+  
+  // 跳转到错题复习
+  goToReview() {
+    wx.navigateTo({
+      url: '/pages/review/review'
+    });
+  },
+  
+  // 跳转到听力练习
+  goToListen() {
+    wx.navigateTo({
+      url: '/pages/listen/listen'
+    });
   }
 });

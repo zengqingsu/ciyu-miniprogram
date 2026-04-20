@@ -1,0 +1,66 @@
+<!--pages/review/review.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">错题复习</text>
+    <text class="subtitle">重点复习不熟悉的单词</text>
+  </view>
+  
+  <!-- 复习统计 -->
+  <view class="stats-section" wx:if="{{unknownWords.length > 0}}">
+    <view class="stat-card">
+      <text class="stat-num">{{unknownWords.length}}</text>
+      <text class="stat-label">待复习</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-num">{{reviewedCount}}</text>
+      <text class="stat-label">已复习</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-num">{{masteredCount}}</text>
+      <text class="stat-label">已掌握</text>
+    </view>
+  </view>
+  
+  <!-- 复习单词列表 -->
+  <view class="review-list" wx:if="{{unknownWords.length > 0}}">
+    <view class="review-item {{item.showAnswer ? 'answered' : ''}}" wx:for="{{unknownWords}}" wx:key="id" bindtap="toggleAnswer" data-index="{{index}}">
+      <view class="word-main">
+        <text class="word">{{item.word}}</text>
+        <text class="phonetic">{{item.pronunciation}}</text>
+      </view>
+      
+      <view class="meaning-section" wx:if="{{item.showAnswer}}">
+        <text class="meaning">{{item.meaning}}</text>
+        <text class="example">{{item.example}}</text>
+        
+        <view class="review-actions">
+          <button class="btn-again" bindtap="markAgain" data-index="{{index}}">再记一次</button>
+          <button class="btn-got" bindtap="markGot" data-index="{{index}}">记住了</button>
+        </view>
+      </view>
+      
+      <view class="tap-hint" wx:else>
+        <text>点击显示释义</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 空状态 -->
+  <view class="empty" wx:elif="{{reviewedCount > 0}}">
+    <text class="empty-icon">🎉</text>
+    <text class="empty-title">太棒了！</text>
+    <text class="empty-text">所有错题都已复习完毕</text>
+    <button class="retry-btn" bindtap="resetReview">重新复习</button>
+  </view>
+  
+  <view class="empty" wx:else>
+    <text class="empty-icon">📚</text>
+    <text class="empty-title">暂无错题</text>
+    <text class="empty-text">学习过程中答错的单词会出现在这里</text>
+  </view>
+  
+  <!-- 底部按钮 -->
+  <view class="bottom-actions" wx:if="{{unknownWords.length > 0}}">
+    <button class="review-all-btn" bindtap="reviewAll">开始复习</button>
+  </view>
+</view>

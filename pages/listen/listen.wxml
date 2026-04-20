@@ -1,0 +1,55 @@
+<!--pages/listen/listen.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">听力练习</text>
+    <text class="subtitle">听读音，选单词</text>
+  </view>
+  
+  <!-- 当前题目 -->
+  <view class="question-section" wx:if="{{currentQuestion && !isComplete}}">
+    <view class="play-btn" bindtap="playAudio">
+      <text class="play-icon">🔊</text>
+      <text class="play-text">点击播放</text>
+    </view>
+    
+    <!-- 选项 -->
+    <view class="options" wx:if="{{showOptions}}">
+      <button 
+        class="option {{selectedIndex === index ? (isCorrect ? 'correct' : 'wrong') : (isCorrect && item === currentQuestion.word ? 'correct' : '')}}"
+        wx:for="{{currentQuestion.options}}" 
+        wx:key="index"
+        bindtap="selectAnswer" 
+        data-answer="{{item}}"
+        disabled="{{answered}}">
+        {{item}}
+      </button>
+    </view>
+    
+    <!-- 提示 -->
+    <view class="hint" wx:if="{{!showOptions}}">
+      <button class="hint-btn" bindtap="showOptionsBtn">显示选项</button>
+    </view>
+    
+    <!-- 下一题 -->
+    <view class="next-btn" wx:if="{{answered}}">
+      <button bindtap="nextQuestion">{{currentIndex < totalQuestions - 1 ? '下一题' : '查看结果'}}</button>
+    </view>
+  </view>
+  
+  <!-- 完成页面 -->
+  <view class="complete-section" wx:if="{{isComplete}}">
+    <text class="complete-icon">🎉</text>
+    <text class="complete-title">练习完成！</text>
+    
+    <view class="score-card">
+      <text class="score">{{correctCount}}</text>
+      <text class="score-label">正确 / {{totalQuestions}}</text>
+      <text class="score-percent">{{Math.round(correctCount / totalQuestions * 100)}}%</text>
+    </view>
+    
+    <view class="complete-actions">
+      <button class="retry-btn" bindtap="retryQuiz">重新练习</button>
+      <button class="back-btn" bindtap="goBack">返回</button>
+    </view>
+  </view>
+</view>

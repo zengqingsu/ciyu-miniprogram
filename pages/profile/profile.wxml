@@ -49,6 +49,8 @@
   
   <!-- 操作 -->
   <view class="section">
+    <button class="review-btn" bindtap="goToReview">📖 错题复习</button>
+    <button class="listen-btn" bindtap="goToListen">👂 听力练习</button>
     <button class="plan-btn" bindtap="goToPlan">📈 学习计划</button>
     <button class="daily-btn" bindtap="goToDaily">📅 每日任务</button>
     <button class="search-btn" bindtap="goToSearch">🔍 单词搜索</button>
