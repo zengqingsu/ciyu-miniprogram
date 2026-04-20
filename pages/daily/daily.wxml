@@ -1,0 +1,39 @@
+<!--pages/daily/daily.wxml-->
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <text class="title">每日任务</text>
+    <text class="subtitle">{{today}}</text>
+  </view>
+  
+  <!-- 任务进度 -->
+  <view class="progress-section">
+    <view class="progress-ring">
+      <text class="progress-num">{{completedCount}}</text>
+      <text class="progress-label">已完成 / {{totalCount}}</text>
+    </view>
+  </view>
+  
+  <!-- 任务列表 -->
+  <view class="task-list">
+    <view class="task-item {{item.completed ? 'completed' : ''}}" wx:for="{{tasks}}" wx:key="id">
+      <view class="task-icon">{{item.completed ? '✅' : '📋'}}</view>
+      <view class="task-info">
+        <text class="task-name">{{item.name}}</text>
+        <text class="task-desc">{{item.desc}}</text>
+        <view class="task-progress">
+          <view class="progress-bar">
+            <view class="progress-fill" style="width: {{item.progress / item.target * 100}}%"></view>
+          </view>
+          <text class="progress-text">{{item.progress}} / {{item.target}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 底部提示 -->
+  <view class="tip">
+    <text wx:if="{{completedCount === totalCount}}">🎉 今日任务全部完成！</text>
+    <text wx:else>继续加油，完成更多任务吧！</text>
+  </view>
+</view>

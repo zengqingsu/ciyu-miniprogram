@@ -39,6 +39,10 @@
   
   <!-- 快捷入口 -->
   <view class="quick-entry">
+    <view class="entry-item" bindtap="goToDaily">
+      <text class="entry-icon">📅</text>
+      <text class="entry-text">每日任务</text>
+    </view>
     <view class="entry-item" bindtap="goToCategory">
       <text class="entry-icon">📂</text>
       <text class="entry-text">分类学习</text>
@@ -46,10 +50,6 @@
     <view class="entry-item" bindtap="goToQuiz">
       <text class="entry-icon">📝</text>
       <text class="entry-text">能力测试</text>
-    </view>
-    <view class="entry-item" bindtap="goToNotebook">
-      <text class="entry-icon">⭐</text>
-      <text class="entry-text">生词本</text>
     </view>
   </view>
   

@@ -79,5 +79,12 @@ Page({
     wx.navigateTo({
       url: '/pages/search/search'
     });
+  },
+  
+  // 跳转到每日任务
+  goToDaily() {
+    wx.navigateTo({
+      url: '/pages/daily/daily'
+    });
   }
 });

@@ -45,6 +45,12 @@ Page({
     });
   },
   
+  goToDaily() {
+    wx.navigateTo({
+      url: '/pages/daily/daily'
+    });
+  },
+  
   goToNotebook() {
     wx.navigateTo({
       url: '/pages/notebook/notebook'

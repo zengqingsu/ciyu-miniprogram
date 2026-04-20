@@ -9,7 +9,8 @@
     "pages/quiz/quiz",
     "pages/category/category",
     "pages/achievement/achievement",
-    "pages/search/search"
+    "pages/search/search",
+    "pages/daily/daily"
   ],
   "window": {
     "navigationBarTitleText": "词途",
