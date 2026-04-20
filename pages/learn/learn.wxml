@@ -1,0 +1,14 @@
+<!--learn.wxml-->
+<view class="container">
+  <view class="progress">已学 {{learnedCount}} 个</view>
+  <view class="word-card" bindtap="showAnswer">
+    <text class="word">{{word.word}}</text>
+    <text class="phonetic">{{word.phonetic}}</text>
+    <text class="meaning" wx:if="{{showMeaning}}">{{word.meaning}}</text>
+    <text class="hint" wx:else>点击显示释义</text>
+  </view>
+  <view class="actions">
+    <button class="btn forget" bindtap="markForget">不认识</button>
+    <button class="btn know" bindtap="markKnow">认识</button>
+  </view>
+</view>

@@ -1,0 +1,17 @@
+/* profile.wxss */
+.container { padding: 30rpx; }
+.profile-header {
+  background: linear-gradient(135deg, #1890ff, #722ed1);
+  padding: 60rpx;
+  border-radius: 20rpx;
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+.name { color: white; font-size: 36rpx; }
+.menu-item {
+  background: #fff;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  border-radius: 10rpx;
+  font-size: 30rpx;
+}

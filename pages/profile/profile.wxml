@@ -1,0 +1,11 @@
+<!--profile.wxml-->
+<view class="container">
+  <view class="profile-header">
+    <text class="name">用户</text>
+  </view>
+  <view class="menu">
+    <view class="menu-item">学习记录</view>
+    <view class="menu-item">设置</view>
+    <view class="menu-item">关于我们</view>
+  </view>
+</view>
