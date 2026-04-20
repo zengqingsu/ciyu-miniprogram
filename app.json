@@ -7,7 +7,9 @@
     "pages/remind/remind",
     "pages/notebook/notebook",
     "pages/quiz/quiz",
-    "pages/category/category"
+    "pages/category/category",
+    "pages/achievement/achievement",
+    "pages/search/search"
   ],
   "window": {
     "navigationBarTitleText": "词途",

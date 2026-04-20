@@ -65,5 +65,19 @@ Page({
     wx.navigateTo({
       url: '/pages/quiz/quiz'
     });
+  },
+  
+  // 跳转到成就
+  goToAchievement() {
+    wx.navigateTo({
+      url: '/pages/achievement/achievement'
+    });
+  },
+  
+  // 跳转到搜索
+  goToSearch() {
+    wx.navigateTo({
+      url: '/pages/search/search'
+    });
   }
 });

@@ -49,6 +49,8 @@
   
   <!-- 操作 -->
   <view class="section">
+    <button class="search-btn" bindtap="goToSearch">🔍 单词搜索</button>
+    <button class="achievement-btn" bindtap="goToAchievement">🏆 成就徽章</button>
     <button class="quiz-btn" bindtap="goToQuiz">📝 能力测试</button>
     <button class="notebook-btn" bindtap="goToNotebook">📚 生词本 ({{stats.notebookCount || 0}})</button>
     <button class="setting-btn" bindtap="goToSettings">API设置</button>

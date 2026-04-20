@@ -1,0 +1,34 @@
+<!--pages/search/search.wxml-->
+<view class="container">
+  <!-- 搜索框 -->
+  <view class="search-box">
+    <input class="search-input" placeholder="搜索单词..." value="{{keyword}}" bindinput="onInput" bindconfirm="onSearch" />
+    <button class="search-btn" bindtap="onSearch">搜索</button>
+  </view>
+  
+  <!-- 搜索结果 -->
+  <view class="result-list" wx:if="{{results.length > 0}}">
+    <view class="result-item" wx:for="{{results}}" wx:key="id">
+      <view class="word-main">
+        <text class="word">{{item.word}}</text>
+        <text class="phonetic">{{item.pronunciation}}</text>
+      </view>
+      <view class="word-meaning">{{item.meaning}}</view>
+      <view class="word-example" wx:if="{{item.example}}">{{item.example}}</view>
+      <view class="word-tags">
+        <text class="tag level">难度{{item.level}}</text>
+        <text class="tag category">{{item.category}}</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 无结果 -->
+  <view class="empty" wx:elif="{{searched}}">
+    <text>未找到匹配的单词</text>
+  </view>
+  
+  <!-- 提示 -->
+  <view class="hint" wx:else>
+    <text>输入单词进行搜索</text>
+  </view>
+</view>

@@ -1,5 +1,4 @@
 // utils/words.js - 单词数据
-// 使用说明：优先从后端API获取，如失败则使用本地数据
 
 // 基础词库
 const localWords = [
@@ -52,6 +51,20 @@ let learningRecords = wx.getStorageSync('learningRecords') || {
 // 生词本
 let notebook = wx.getStorageSync('notebook') || [];
 
+// 成就系统
+const achievements = [
+  { id: 'first_learn', name: '初学者', desc: '完成第一次学习', icon: '🌟', condition: (r) => r.total >= 1 },
+  { id: 'learn_10', name: '小试牛刀', desc: '学习10个单词', icon: '📚', condition: (r) => r.total >= 10 },
+  { id: 'learn_50', name: '学而不厌', desc: '学习50个单词', icon: '🎓', condition: (r) => r.total >= 50 },
+  { id: 'learn_100', name: '学霸', desc: '学习100个单词', icon: '🏆', condition: (r) => r.total >= 100 },
+  { id: 'streak_3', name: '坚持不懈', desc: '连续学习3天', icon: '🔥', condition: (r) => r.streak >= 3 },
+  { id: 'streak_7', name: '一周达人', desc: '连续学习7天', icon: '💪', condition: (r) => r.streak >= 7 },
+  { id: 'streak_30', name: '习惯养成', desc: '连续学习30天', icon: '👑', condition: (r) => r.streak >= 30 },
+  { id: 'notebook_5', name: '收藏家', desc: '收藏5个生词', icon: '⭐', condition: (r) => notebook.length >= 5 },
+  { id: 'notebook_20', name: '词汇宝库', desc: '收藏20个生词', icon: '💎', condition: (r) => notebook.length >= 20 },
+  { id: 'master_10', name: '掌握者', desc: '掌握10个单词', icon: '✅', condition: (r) => r.known.length >= 10 }
+];
+
 // 获取单词列表
 function getWordsList() {
   const onlineWords = wx.getStorageSync('onlineWords');
@@ -68,52 +81,43 @@ function shouldReview(wordId) {
   if (!lastReview) return true;
   
   const daysPassed = (Date.now() - lastReview) / (1000 * 60 * 60 * 24);
-  // 复习周期：1天、3天、7天、14天、30天
   const intervals = [1, 3, 7, 14, 30];
   
   return intervals.some(interval => Math.abs(daysPassed - interval) < 0.5);
 }
 
 module.exports = {
-  // 获取所有单词
   getWords: () => getWordsList(),
   
-  // 获取随机单词
   getRandomWord: () => {
     const words = getWordsList();
     return words[Math.floor(Math.random() * words.length)];
   },
   
-  // 获取指定数量单词
   getWordsBatch: (count = 10) => {
     const words = getWordsList();
     const shuffled = [...words].sort(() => Math.random() - 0.5);
     return shuffled.slice(0, count);
   },
   
-  // 按难度获取单词
   getWordsByLevel: (level) => {
     return localWords.filter(w => w.level === level);
   },
   
-  // 按分类获取单词
   getWordsByCategory: (category) => {
     return localWords.filter(w => w.category === category);
   },
   
-  // 获取所有分类
   getCategories: () => {
     const categories = [...new Set(localWords.map(w => w.category))];
     return categories;
   },
   
-  // 获取需要复习的单词
   getReviewWords: () => {
     const allWords = getWordsList();
     return allWords.filter(w => shouldReview(w.id));
   },
   
-  // 标记认识
   markKnown: (wordId) => {
     if (!learningRecords.known.includes(wordId)) {
       learningRecords.known.push(wordId);
@@ -121,14 +125,12 @@ module.exports = {
       learningRecords.lastDate = new Date().toDateString();
       wx.setStorageSync('learningRecords', learningRecords);
       
-      // 记录复习时间
       const reviewRecord = wx.getStorageSync('reviewRecord') || {};
       reviewRecord[wordId] = Date.now();
       wx.setStorageSync('reviewRecord', reviewRecord);
     }
   },
   
-  // 标记不认识
   markUnknown: (wordId) => {
     if (!learningRecords.unknown.includes(wordId)) {
       learningRecords.unknown.push(wordId);
@@ -138,7 +140,6 @@ module.exports = {
     }
   },
   
-  // 添加到生词本
   addToNotebook: (word) => {
     if (!notebook.find(w => w.id === word.id)) {
       notebook.push({...word, addedAt: Date.now()});
@@ -148,19 +149,15 @@ module.exports = {
     return false;
   },
   
-  // 从生词本移除
   removeFromNotebook: (wordId) => {
     notebook = notebook.filter(w => w.id !== wordId);
     wx.setStorageSync('notebook', notebook);
   },
   
-  // 获取生词本
   getNotebook: () => notebook,
   
-  // 获取学习记录
   getRecords: () => learningRecords,
   
-  // 获取统计信息
   getStats: () => {
     const reviewWords = getWordsList().filter(w => shouldReview(w.id));
     return {
@@ -176,11 +173,33 @@ module.exports = {
     };
   },
   
-  // 同步在线单词
+  // 获取成就
+  getAchievements: () => {
+    return achievements.map(achievement => ({
+      ...achievement,
+      unlocked: achievement.condition({ known: learningRecords.known, total: learningRecords.total, streak: learningRecords.streak })
+    }));
+  },
+  
+  // 检查并获取新成就
+  checkAchievements: () => {
+    const unlocked = achievements
+      .filter(a => a.condition({ known: learningRecords.known, total: learningRecords.total, streak: learningRecords.streak }))
+      .map(a => a.id);
+    
+    const oldUnlocked = wx.getStorageSync('unlockedAchievements') || [];
+    const newUnlocked = unlocked.filter(id => !oldUnlocked.includes(id));
+    
+    if (newUnlocked.length > 0) {
+      wx.setStorageSync('unlockedAchievements', unlocked);
+      return newUnlocked;
+    }
+    return [];
+  },
+  
   syncOnlineWords: (words) => {
     wx.setStorageSync('onlineWords', words);
   },
   
-  // 获取本地单词数量
   getLocalCount: () => localWords.length
 };

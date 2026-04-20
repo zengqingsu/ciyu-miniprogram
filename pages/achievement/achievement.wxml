@@ -1,0 +1,25 @@
+<!--pages/achievement/achievement.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">成就徽章</text>
+    <text class="subtitle">记录你的学习里程碑</text>
+  </view>
+  
+  <!-- 成就列表 -->
+  <view class="achievement-list">
+    <view class="achievement-item {{item.unlocked ? 'unlocked' : 'locked'}}" wx:for="{{achievements}}" wx:key="id">
+      <view class="achievement-icon">{{item.icon}}</view>
+      <view class="achievement-info">
+        <text class="achievement-name">{{item.name}}</text>
+        <text class="achievement-desc">{{item.desc}}</text>
+      </view>
+      <view class="achievement-status" wx:if="{{item.unlocked}}">✅</view>
+      <view class="achievement-status locked" wx:else>🔒</view>
+    </view>
+  </view>
+  
+  <!-- 解锁统计 -->
+  <view class="unlock-stats">
+    <text>已解锁 {{unlockedCount}} / {{totalCount}}</text>
+  </view>
+</view>
