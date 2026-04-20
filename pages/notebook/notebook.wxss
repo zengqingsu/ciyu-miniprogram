@@ -1,0 +1,106 @@
+/* pages/notebook/notebook.wxss */
+.container {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 40rpx 30rpx;
+  color: #fff;
+}
+
+.title {
+  display: block;
+  font-size: 48rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.subtitle {
+  display: block;
+  font-size: 28rpx;
+  opacity: 0.8;
+}
+
+.word-list {
+  padding: 20rpx;
+}
+
+.word-item {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.word-info {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 15rpx;
+}
+
+.word {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333;
+  margin-right: 20rpx;
+}
+
+.phonetic {
+  font-size: 28rpx;
+  color: #999;
+}
+
+.word-meaning {
+  font-size: 30rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.word-example {
+  font-size: 26rpx;
+  color: #999;
+  font-style: italic;
+  margin-bottom: 20rpx;
+}
+
+.word-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.study-btn {
+  background: #667eea !important;
+  color: #fff !important;
+}
+
+.delete-btn {
+  background: #fff !important;
+  color: #ff4d4f !important;
+  border: 1rpx solid #ff4d4f !important;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 0;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-text {
+  font-size: 36rpx;
+  color: #333;
+  margin-bottom: 15rpx;
+}
+
+.empty-hint {
+  font-size: 28rpx;
+  color: #999;
+}

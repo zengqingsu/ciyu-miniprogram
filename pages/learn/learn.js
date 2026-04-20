@@ -78,5 +78,22 @@ Page({
   // 切换到下一个单词（不记录）
   skipWord() {
     this.loadNextWord();
+  },
+  
+  // 加入生词本
+  addToNotebook() {
+    const word = this.data.word;
+    const added = words.addToNotebook(word);
+    if (added) {
+      wx.showToast({
+        title: '已加入生词本 ⭐',
+        icon: 'success'
+      });
+    } else {
+      wx.showToast({
+        title: '已在生词本中',
+        icon: 'none'
+      });
+    }
   }
 });

@@ -116,6 +116,20 @@
   color: #666;
 }
 
+.notebook-btn {
+  display: inline-block;
+  margin-top: 30rpx;
+  padding: 15rpx 30rpx;
+  background: linear-gradient(135deg, #ffd700, #ffb800);
+  border-radius: 30rpx;
+}
+
+.notebook-btn text {
+  font-size: 26rpx;
+  color: #333;
+  font-weight: bold;
+}
+
 /* 操作按钮 */
 .actions {
   display: flex;

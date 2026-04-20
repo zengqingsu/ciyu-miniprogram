@@ -49,6 +49,7 @@
   
   <!-- 操作 -->
   <view class="section">
+    <button class="notebook-btn" bindtap="goToNotebook">📚 生词本 ({{stats.notebookCount || 0}})</button>
     <button class="setting-btn" bindtap="goToSettings">API设置</button>
     <button class="remind-btn" bindtap="goToRemind">学习提醒</button>
     <button class="clear-btn" bindtap="clearRecords">清除记录</button>

@@ -31,6 +31,9 @@
       <view class="level-badge" wx:if="{{word.level}}">
         <text>难度{{word.level}}</text>
       </view>
+      <view class="notebook-btn" bindtap="addToNotebook">
+        <text>⭐ 加入生词本</text>
+      </view>
     </view>
   </view>
   

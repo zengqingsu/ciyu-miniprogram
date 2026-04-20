@@ -51,5 +51,12 @@ Page({
     wx.navigateTo({
       url: '/pages/remind/remind'
     });
+  },
+  
+  // 跳转到生词本
+  goToNotebook() {
+    wx.navigateTo({
+      url: '/pages/notebook/notebook'
+    });
   }
 });
