@@ -1,14 +1,54 @@
-<!--learn.wxml-->
+<!--pages/learn/learn.wxml-->
 <view class="container">
-  <view class="progress">已学 {{learnedCount}} 个</view>
-  <view class="word-card" bindtap="showAnswer">
-    <text class="word">{{word.word}}</text>
-    <text class="phonetic">{{word.phonetic}}</text>
-    <text class="meaning" wx:if="{{showMeaning}}">{{word.meaning}}</text>
-    <text class="hint" wx:else>点击显示释义</text>
+  <!-- 进度条 -->
+  <view class="progress-bar">
+    <view class="progress-fill" style="width: {{progress}}%"></view>
   </view>
+  
+  <!-- 统计信息 -->
+  <view class="stats">
+    <text>今日学习: {{learnedCount}} 词</text>
+    <text>认识: {{stats.known || 0}}</text>
+    <text>不认识: {{stats.unknown || 0}}</text>
+  </view>
+  
+  <!-- 单词卡片 -->
+  <view class="card">
+    <!-- 单词 -->
+    <view class="word-section">
+      <text class="word">{{word.word}}</text>
+      <text class="phonetic">{{word.pronunciation}}</text>
+    </view>
+    
+    <!-- 释义（点击显示） -->
+    <view class="meaning-section" bindtap="showAnswer" wx:if="{{!showMeaning}}">
+      <text class="tap-hint">点击显示释义</text>
+    </view>
+    
+    <view class="meaning-detail" wx:if="{{showMeaning}}">
+      <text class="meaning">{{word.meaning}}</text>
+      <text class="example" wx:if="{{word.example}}">{{word.example}}</text>
+      <view class="level-badge" wx:if="{{word.level}}">
+        <text>难度{{word.level}}</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 操作按钮 -->
   <view class="actions">
-    <button class="btn forget" bindtap="markForget">不认识</button>
-    <button class="btn know" bindtap="markKnow">认识</button>
+    <button class="btn-unknown" bindtap="markForget" disabled="{{isAnimating}}">
+      不认识
+    </button>
+    <button class="btn-show" bindtap="showAnswer" wx:if="{{!showMeaning}}">
+      显示释义
+    </button>
+    <button class="btn-known" bindtap="markKnow" wx:if="{{showMeaning}}" disabled="{{isAnimating}}">
+      认识
+    </button>
+  </view>
+  
+  <!-- 跳过按钮 -->
+  <view class="skip" bindtap="skipWord">
+    <text>跳过</text>
   </view>
 </view>

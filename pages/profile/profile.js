@@ -1,0 +1,41 @@
+// pages/profile/profile.js
+const words = require('../../utils/words.js');
+
+Page({
+  data: {
+    stats: {},
+    records: {}
+  },
+  
+  onLoad() {
+    this.loadData();
+  },
+  
+  onShow() {
+    this.loadData();
+  },
+  
+  loadData() {
+    const stats = words.getStats();
+    const records = words.getRecords();
+    this.setData({ stats, records });
+  },
+  
+  // 清除学习记录
+  clearRecords() {
+    wx.showModal({
+      title: '确认清除',
+      content: '确定要清除所有学习记录吗？',
+      success: (res) => {
+        if (res.confirm) {
+          wx.removeStorageSync('learningRecords');
+          this.loadData();
+          wx.showToast({
+            title: '已清除',
+            icon: 'success'
+          });
+        }
+      }
+    });
+  }
+});

@@ -1,17 +1,181 @@
-/* learn.wxss */
-.container { padding: 30rpx; }
-.word-card {
-  background: #fff;
-  padding: 60rpx;
-  border-radius: 20rpx;
-  text-align: center;
-  margin: 30rpx 0;
-  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.1);
+/* pages/learn/learn.wxss */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20rpx;
+  display: flex;
+  flex-direction: column;
 }
-.word { font-size: 48rpx; font-weight: bold; display: block; }
-.phonetic { color: #666; font-size: 28rpx; display: block; margin: 20rpx 0; }
-.meaning { color: #1890ff; font-size: 36rpx; }
-.actions { display: flex; justify-content: space-around; margin-top: 60rpx; }
-.btn { width: 40%; }
-.forget { background: #ff4d4f; color: white; }
-.know { background: #52c41a; color: white; }
+
+/* 进度条 */
+.progress-bar {
+  height: 8rpx;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4rpx;
+  margin-bottom: 30rpx;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #4caf50;
+  border-radius: 4rpx;
+  transition: width 0.3s ease;
+}
+
+/* 统计信息 */
+.stats {
+  display: flex;
+  justify-content: space-around;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 28rpx;
+  margin-bottom: 40rpx;
+}
+
+/* 单词卡片 */
+.card {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 60rpx 40rpx;
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.15);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 500rpx;
+}
+
+.word-section {
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.word {
+  display: block;
+  font-size: 72rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.phonetic {
+  display: block;
+  font-size: 36rpx;
+  color: #999;
+}
+
+.meaning-section {
+  text-align: center;
+  padding: 60rpx 0;
+}
+
+.tap-hint {
+  font-size: 32rpx;
+  color: #1890ff;
+  padding: 20rpx 40rpx;
+  border: 2rpx dashed #1890ff;
+  border-radius: 12rpx;
+}
+
+.meaning-detail {
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.meaning {
+  display: block;
+  font-size: 40rpx;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 30rpx;
+}
+
+.example {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  font-style: italic;
+  line-height: 1.8;
+}
+
+.level-badge {
+  display: inline-block;
+  margin-top: 30rpx;
+  padding: 8rpx 24rpx;
+  background: #f0f0f0;
+  border-radius: 20rpx;
+}
+
+.level-badge text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 操作按钮 */
+.actions {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 40rpx;
+}
+
+.actions button {
+  flex: 1;
+  height: 100rpx;
+  border-radius: 50rpx;
+  font-size: 32rpx;
+  border: none;
+}
+
+.btn-unknown {
+  background: #ff4d4f;
+  color: #fff;
+}
+
+.btn-unknown:active {
+  background: #d9363e;
+}
+
+.btn-show {
+  background: #1890ff;
+  color: #fff;
+}
+
+.btn-show:active {
+  background: #096dd9;
+}
+
+.btn-known {
+  background: #52c41a;
+  color: #fff;
+}
+
+.btn-known:active {
+  background: #389e0d;
+}
+
+/* 跳过按钮 */
+.skip {
+  text-align: center;
+  margin-top: 30rpx;
+}
+
+.skip text {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 28rpx;
+  padding: 20rpx;
+}
+
+/* 动画 */
+@keyframes slideOut {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(-100%); opacity: 0; }
+}
+
+.card.animating {
+  animation: slideOut 0.3s ease forwards;
+}

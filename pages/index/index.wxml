@@ -1,18 +1,49 @@
-<!--index.wxml-->
+<!--pages/index/index.wxml-->
 <view class="container">
+  <!-- 头部 -->
   <view class="header">
-    <text class="title">每日单词</text>
-    <text class="subtitle">轻松背单词</text>
+    <text class="title">词途</text>
+    <text class="subtitle">让背单词变得更简单</text>
   </view>
-  <view class="stats">
+  
+  <!-- 统计卡片 -->
+  <view class="stats-card">
     <view class="stat-item">
-      <text class="num">0</text>
-      <text class="label">今日已学</text>
+      <text class="stat-num">{{stats.total || 0}}</text>
+      <text class="stat-label">总学习</text>
     </view>
     <view class="stat-item">
-      <text class="num">0</text>
-      <text class="label">连续天数</text>
+      <text class="stat-num">{{stats.known || 0}}</text>
+      <text class="stat-label">已掌握</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-num">{{stats.unknown || 0}}</text>
+      <text class="stat-label">待复习</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-num">{{stats.progress || 0}}%</text>
+      <text class="stat-label">掌握率</text>
     </view>
   </view>
-  <button class="start-btn">开始学习</button>
+  
+  <!-- 今日单词预览 -->
+  <view class="today-section">
+    <text class="section-title">今日推荐</text>
+    <view class="words-list">
+      <view class="word-item" wx:for="{{todayWords}}" wx:key="id">
+        <text class="word-text">{{item.word}}</text>
+        <text class="word-meaning">{{item.meaning}}</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 开始学习按钮 -->
+  <view class="start-btn" bindtap="goToLearn">
+    <text>开始学习</text>
+  </view>
+  
+  <!-- 底部导航提示 -->
+  <view class="tip">
+    <text>点击底部「学习」标签开始背单词</text>
+  </view>
 </view>

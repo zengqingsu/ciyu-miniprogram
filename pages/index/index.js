@@ -1,10 +1,35 @@
 // pages/index/index.js
+const words = require('../../utils/words.js');
+
 Page({
   data: {
-    todayCount: 0,
-    streakDays: 0
+    stats: {},
+    todayWords: []
   },
+  
   onLoad() {
-    // 加载用户数据
+    this.loadData();
+  },
+  
+  onShow() {
+    this.loadData();
+  },
+  
+  loadData() {
+    const stats = words.getStats();
+    const todayWords = words.getWordsBatch(5);
+    this.setData({ stats, todayWords });
+  },
+  
+  goToLearn() {
+    wx.switchTab({
+      url: '/pages/learn/learn'
+    });
+  },
+  
+  goToProfile() {
+    wx.switchTab({
+      url: '/pages/profile/profile'
+    });
   }
 });
