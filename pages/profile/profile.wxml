@@ -49,6 +49,7 @@
   
   <!-- 操作 -->
   <view class="section">
+    <button class="setting-btn" bindtap="goToSettings">API设置</button>
     <button class="clear-btn" bindtap="clearRecords">清除记录</button>
   </view>
   

@@ -37,5 +37,12 @@ Page({
         }
       }
     });
+  },
+  
+  // 跳转到设置页面
+  goToSettings() {
+    wx.navigateTo({
+      url: '/pages/settings/settings'
+    });
   }
 });

@@ -2,16 +2,17 @@
   "pages": [
     "pages/index/index",
     "pages/learn/learn",
-    "pages/profile/profile"
+    "pages/profile/profile",
+    "pages/settings/settings"
   ],
   "window": {
     "navigationBarTitleText": "词途",
-    "navigationBarBackgroundColor": "#ffffff",
-    "navigationBarTextStyle": "black"
+    "navigationBarBackgroundColor": "#667eea",
+    "navigationBarTextStyle": "white"
   },
   "tabBar": {
     "color": "#999999",
-    "selectedColor": "#1890ff",
+    "selectedColor": "#667eea",
     "list": [
       {
         "pagePath": "pages/index/index",
@@ -26,5 +27,7 @@
         "text": "我的"
       }
     ]
-  }
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
 }

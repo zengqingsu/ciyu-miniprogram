@@ -47,16 +47,30 @@ let learningRecords = wx.getStorageSync('learningRecords') || {
   lastDate: null
 };
 
+// 获取单词列表（优先在线，后备本地）
+function getWordsList() {
+  // 尝试获取在线单词
+  const onlineWords = wx.getStorageSync('onlineWords');
+  if (onlineWords && onlineWords.length > 0) {
+    return onlineWords;
+  }
+  return localWords;
+}
+
 module.exports = {
   // 获取所有单词
-  getWords: () => localWords,
+  getWords: () => getWordsList(),
   
   // 获取随机单词
-  getRandomWord: () => localWords[Math.floor(Math.random() * localWords.length)],
+  getRandomWord: () => {
+    const words = getWordsList();
+    return words[Math.floor(Math.random() * words.length)];
+  },
   
   // 获取指定数量单词
   getWordsBatch: (count = 10) => {
-    const shuffled = [...localWords].sort(() => Math.random() - 0.5);
+    const words = getWordsList();
+    const shuffled = [...words].sort(() => Math.random() - 0.5);
     return shuffled.slice(0, count);
   },
   
@@ -93,18 +107,6 @@ module.exports = {
     const today = new Date().toDateString();
     const lastDate = learningRecords.lastDate;
     
-    // 计算连续学习天数
-    if (lastDate !== today) {
-      const yesterday = new Date();
-      yesterday.setDate(yesterday.getDate() - 1);
-      if (lastDate === yesterday.toDateString()) {
-        // 昨天学习过，连续天数保持
-      } else if (lastDate !== null) {
-        learningRecords.streak = 0;
-        wx.setStorageSync('learningRecords', learningRecords);
-      }
-    }
-    
     return {
       total: learningRecords.total,
       known: learningRecords.known.length,
@@ -114,5 +116,13 @@ module.exports = {
         ? Math.round((learningRecords.known.length / learningRecords.total) * 100) 
         : 0
     };
-  }
+  },
+  
+  // 同步在线单词（由设置页调用）
+  syncOnlineWords: (words) => {
+    wx.setStorageSync('onlineWords', words);
+  },
+  
+  // 获取本地单词数量
+  getLocalCount: () => localWords.length
 };

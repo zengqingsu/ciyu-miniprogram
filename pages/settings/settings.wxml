@@ -1,0 +1,30 @@
+<!--pages/settings/settings.wxml-->
+<view class="container">
+  <view class="section">
+    <text class="section-title">API设置</text>
+    <view class="input-group">
+      <text class="label">后端API地址</text>
+      <input class="input" placeholder="请输入API地址" value="{{apiBase}}" bindinput="onApiInput" />
+      <text class="hint">例如: https://your-api-domain.com</text>
+    </view>
+  </view>
+
+  <view class="section">
+    <text class="section-title">测试连接</text>
+    <button class="test-btn" bindtap="testApi" loading="{{testing}}">测试API连接</button>
+    <text class="result" wx:if="{{testResult}}">{{testResult}}</text>
+  </view>
+
+  <view class="section">
+    <text class="section-title">数据同步</text>
+    <view class="sync-info">
+      <text>本地单词数: {{localCount}}</text>
+      <text>在线单词数: {{onlineCount}}</text>
+    </view>
+    <button class="sync-btn" bindtap="syncWords" loading="{{syncing}}">同步单词数据</button>
+  </view>
+
+  <view class="save-btn" bindtap="saveSettings">
+    <text>保存设置</text>
+  </view>
+</view>
