@@ -86,5 +86,12 @@ Page({
     wx.navigateTo({
       url: '/pages/daily/daily'
     });
+  },
+  
+  // 跳转到学习计划
+  goToPlan() {
+    wx.navigateTo({
+      url: '/pages/plan/plan'
+    });
   }
 });

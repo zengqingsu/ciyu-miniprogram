@@ -1,0 +1,62 @@
+<!--pages/plan/plan.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">学习计划</text>
+    <text class="subtitle">制定你的背单词目标</text>
+  </view>
+  
+  <!-- 目标设置 -->
+  <view class="section">
+    <text class="section-title">每日目标</text>
+    <view class="goal-options">
+      <view class="goal-item {{dailyGoal === 5 ? 'active' : ''}}" bindtap="setGoal" data-goal="5">
+        <text class="goal-num">5</text>
+        <text class="goal-label">词/天</text>
+      </view>
+      <view class="goal-item {{dailyGoal === 10 ? 'active' : ''}}" bindtap="setGoal" data-goal="10">
+        <text class="goal-num">10</text>
+        <text class="goal-label">词/天</text>
+      </view>
+      <view class="goal-item {{dailyGoal === 20 ? 'active' : ''}}" bindtap="setGoal" data-goal="20">
+        <text class="goal-num">20</text>
+        <text class="goal-label">词/天</text>
+      </view>
+      <view class="goal-item {{dailyGoal === 30 ? 'active' : ''}}" bindtap="setGoal" data-goal="30">
+        <text class="goal-num">30</text>
+        <text class="goal-label">词/天</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 计划周期 -->
+  <view class="section">
+    <text class="section-title">计划周期</text>
+    <view class="plan-info">
+      <text>预计完成天数：{{ Math.ceil(totalWords / dailyGoal) }} 天</text>
+      <text>完成进度：{{ Math.round((1 - (remainingWords / totalWords)) * 100) }}%</text>
+    </view>
+  </view>
+  
+  <!-- 统计 -->
+  <view class="section">
+    <text class="section-title">学习统计</text>
+    <view class="stats-grid">
+      <view class="stat-box">
+        <text class="stat-num">{{totalWords}}</text>
+        <text class="stat-label">总词数</text>
+      </view>
+      <view class="stat-box">
+        <text class="stat-num">{{learnedWords}}</text>
+        <text class="stat-label">已学完</text>
+      </view>
+      <view class="stat-box">
+        <text class="stat-num">{{remainingWords}}</text>
+        <text class="stat-label">剩余</text>
+      </view>
+      <view class="stat-box">
+        <text class="stat-num">{{daysLeft}}</text>
+        <text class="stat-label">预计天数</text>
+      </view>
+    </view>
+  </view>
+</view>

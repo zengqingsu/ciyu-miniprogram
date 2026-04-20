@@ -1,0 +1,109 @@
+/* pages/plan/plan.wxss */
+.container {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 40rpx 30rpx;
+  color: #fff;
+}
+
+.title {
+  display: block;
+  font-size: 48rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.subtitle {
+  display: block;
+  font-size: 28rpx;
+  opacity: 0.8;
+}
+
+.section {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin: 20rpx;
+}
+
+.section-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.goal-options {
+  display: flex;
+  justify-content: space-between;
+}
+
+.goal-item {
+  flex: 1;
+  text-align: center;
+  padding: 30rpx 10rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 12rpx;
+  margin: 0 10rpx;
+}
+
+.goal-item.active {
+  border-color: #667eea;
+  background: #f0f5ff;
+}
+
+.goal-num {
+  display: block;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.goal-label {
+  display: block;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.plan-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+.plan-info text {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+}
+
+.stat-box {
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  text-align: center;
+}
+
+.stat-num {
+  display: block;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #667eea;
+  margin-bottom: 10rpx;
+}
+
+.stat-label {
+  display: block;
+  font-size: 26rpx;
+  color: #999;
+}

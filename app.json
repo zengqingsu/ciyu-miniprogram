@@ -10,7 +10,8 @@
     "pages/category/category",
     "pages/achievement/achievement",
     "pages/search/search",
-    "pages/daily/daily"
+    "pages/daily/daily",
+    "pages/plan/plan"
   ],
   "window": {
     "navigationBarTitleText": "词途",

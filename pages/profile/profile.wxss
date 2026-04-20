@@ -104,6 +104,14 @@
 }
 
 /* 按钮 */
+.plan-btn {
+  background: #1890ff;
+  color: #fff;
+  border-radius: 12rpx;
+  font-size: 30rpx;
+  margin-bottom: 20rpx;
+}
+
 .daily-btn {
   background: #eb2f96;
   color: #fff;
