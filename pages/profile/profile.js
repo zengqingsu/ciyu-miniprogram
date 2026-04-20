@@ -58,5 +58,12 @@ Page({
     wx.navigateTo({
       url: '/pages/notebook/notebook'
     });
+  },
+  
+  // 跳转到测试
+  goToQuiz() {
+    wx.navigateTo({
+      url: '/pages/quiz/quiz'
+    });
   }
 });

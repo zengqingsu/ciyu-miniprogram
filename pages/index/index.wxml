@@ -37,6 +37,22 @@
     </view>
   </view>
   
+  <!-- 快捷入口 -->
+  <view class="quick-entry">
+    <view class="entry-item" bindtap="goToCategory">
+      <text class="entry-icon">📂</text>
+      <text class="entry-text">分类学习</text>
+    </view>
+    <view class="entry-item" bindtap="goToQuiz">
+      <text class="entry-icon">📝</text>
+      <text class="entry-text">能力测试</text>
+    </view>
+    <view class="entry-item" bindtap="goToNotebook">
+      <text class="entry-icon">⭐</text>
+      <text class="entry-text">生词本</text>
+    </view>
+  </view>
+  
   <!-- 开始学习按钮 -->
   <view class="start-btn" bindtap="goToLearn">
     <text>开始学习</text>

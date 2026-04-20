@@ -1,0 +1,19 @@
+<!--pages/category/category.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">分类学习</text>
+    <text class="subtitle">按类别选择单词</text>
+  </view>
+  
+  <!-- 分类列表 -->
+  <view class="category-list">
+    <view class="category-item" wx:for="{{categories}}" wx:key="name" bindtap="selectCategory" data-category="{{item}}">
+      <view class="category-icon">{{item.icon}}</view>
+      <view class="category-info">
+        <text class="category-name">{{item.name}}</text>
+        <text class="category-count">{{item.count}} 个单词</text>
+      </view>
+      <view class="category-arrow">→</view>
+    </view>
+  </view>
+</view>

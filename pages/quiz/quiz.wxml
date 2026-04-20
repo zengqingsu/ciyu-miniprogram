@@ -1,0 +1,68 @@
+<!--pages/quiz/quiz.wxml-->
+<view class="container">
+  <!-- 进度 -->
+  <view class="progress-section">
+    <view class="progress-bar">
+      <view class="progress-fill" style="width: {{progress}}%"></view>
+    </view>
+    <text class="progress-text">{{currentIndex + 1}} / {{questions.length}}</text>
+  </view>
+  
+  <!-- 题目 -->
+  <view class="question-card" wx:if="{{currentQuestion}}">
+    <view class="word-display">
+      <text class="word">{{currentQuestion.word}}</text>
+    </view>
+    
+    <!-- 选择题选项 -->
+    <view class="options" wx:if="{{currentQuestion.type === 'choice'}}">
+      <button 
+        class="option {{selectedAnswer === index ? 'selected' : ''}} {{showResult ? (index === currentQuestion.correctIndex ? 'correct' : (selectedAnswer === index ? 'wrong' : '')) : ''}}" 
+        wx:for="{{currentQuestion.options}}" 
+        wx:key="index"
+        bindtap="selectAnswer" 
+        data-index="{{index}}"
+        disabled="{{showResult}}">
+        {{item}}
+      </button>
+    </view>
+    
+    <!-- 听力题 -->
+    <view class="listen-section" wx:if="{{currentQuestion.type === 'listen'}}">
+      <button class="listen-btn" bindtap="playAudio">
+        🔊 播放发音
+      </button>
+    </view>
+  </view>
+  
+  <!-- 结果 -->
+  <view class="result-section" wx:if="{{showResult}}">
+    <view class="result-icon {{isCorrect ? 'correct' : 'wrong'}}">
+      {{isCorrect ? '✅' : '❌'}}
+    </view>
+    <text class="result-text">{{isCorrect ? '回答正确！' : '回答错误'}}</text>
+    <view class="correct-answer">
+      <text>正确答案：{{currentQuestion.options[currentQuestion.correctIndex]}}</text>
+    </view>
+  </view>
+  
+  <!-- 下一题按钮 -->
+  <view class="next-btn" wx:if="{{showResult}}">
+    <button bindtap="nextQuestion">{{currentIndex < questions.length - 1 ? '下一题' : '查看结果'}}</button>
+  </view>
+  
+  <!-- 完成页面 -->
+  <view class="complete-section" wx:if="{{isComplete}}">
+    <text class="complete-icon">🎉</text>
+    <text class="complete-title">测试完成！</text>
+    <view class="score-card">
+      <text class="score">{{correctCount}}</text>
+      <text class="score-label">正确 / {{questions.length}}</text>
+      <text class="score-percent">{{Math.round(correctCount / questions.length * 100)}}%</text>
+    </view>
+    <view class="complete-actions">
+      <button class="retry-btn" bindtap="retryQuiz">重新测试</button>
+      <button class="back-btn" bindtap="goBack">返回</button>
+    </view>
+  </view>
+</view>

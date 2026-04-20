@@ -103,6 +103,43 @@
   color: #666;
 }
 
+/* 快捷入口 */
+.quick-entry {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40rpx;
+}
+
+.entry-item {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16rpx;
+  padding: 30rpx 20rpx;
+  text-align: center;
+  margin: 0 10rpx;
+  box-shadow: 0 5rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.entry-item:first-child {
+  margin-left: 0;
+}
+
+.entry-item:last-child {
+  margin-right: 0;
+}
+
+.entry-icon {
+  display: block;
+  font-size: 48rpx;
+  margin-bottom: 10rpx;
+}
+
+.entry-text {
+  display: block;
+  font-size: 24rpx;
+  color: #666;
+}
+
 /* 开始学习按钮 */
 .start-btn {
   background: #52c41a;

@@ -5,7 +5,9 @@
     "pages/profile/profile",
     "pages/settings/settings",
     "pages/remind/remind",
-    "pages/notebook/notebook"
+    "pages/notebook/notebook",
+    "pages/quiz/quiz",
+    "pages/category/category"
   ],
   "window": {
     "navigationBarTitleText": "词途",

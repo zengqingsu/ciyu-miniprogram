@@ -31,5 +31,23 @@ Page({
     wx.switchTab({
       url: '/pages/profile/profile'
     });
+  },
+  
+  goToCategory() {
+    wx.navigateTo({
+      url: '/pages/category/category'
+    });
+  },
+  
+  goToQuiz() {
+    wx.navigateTo({
+      url: '/pages/quiz/quiz'
+    });
+  },
+  
+  goToNotebook() {
+    wx.navigateTo({
+      url: '/pages/notebook/notebook'
+    });
   }
 });
