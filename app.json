@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/learn/learn",
     "pages/profile/profile",
-    "pages/settings/settings"
+    "pages/settings/settings",
+    "pages/remind/remind"
   ],
   "window": {
     "navigationBarTitleText": "词途",

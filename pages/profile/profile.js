@@ -44,5 +44,12 @@ Page({
     wx.navigateTo({
       url: '/pages/settings/settings'
     });
+  },
+  
+  // 跳转到提醒设置
+  goToRemind() {
+    wx.navigateTo({
+      url: '/pages/remind/remind'
+    });
   }
 });

@@ -1,0 +1,49 @@
+<!--pages/remind/remind.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">学习提醒</text>
+    <text class="subtitle">设置每日学习提醒</text>
+  </view>
+  
+  <!-- 提醒开关 -->
+  <view class="section">
+    <view class="switch-row">
+      <text class="label">开启每日提醒</text>
+      <switch checked="{{enabled}}" bindchange="onSwitchChange" color="#667eea"/>
+    </view>
+  </view>
+  
+  <!-- 提醒时间 -->
+  <view class="section" wx:if="{{enabled}}">
+    <text class="section-title">提醒时间</text>
+    <picker mode="time" value="{{time}}" bindchange="onTimeChange">
+      <view class="picker">
+        <text>{{time}}</text>
+      </view>
+    </picker>
+  </view>
+  
+  <!-- 提醒频率 -->
+  <view class="section" wx:if="{{enabled}}">
+    <text class="section-title">提醒频率</text>
+    <radio-group bindchange="onFrequencyChange">
+      <label class="radio-item" wx:for="{{frequencies}}" wx:key="value">
+        <radio value="{{item.value}}" checked="{{frequency === item.value}}" color="#667eea"/>
+        <text>{{item.label}}</text>
+      </label>
+    </radio-group>
+  </view>
+  
+  <!-- 提醒文案预览 -->
+  <view class="section" wx:if="{{enabled}}">
+    <text class="section-title">提醒文案</text>
+    <view class="preview">
+      <text>{{previewText}}</text>
+    </view>
+  </view>
+  
+  <!-- 保存按钮 -->
+  <view class="save-btn" bindtap="saveSettings">
+    <text>保存设置</text>
+  </view>
+</view>
