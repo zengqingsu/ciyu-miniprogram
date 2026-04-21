@@ -24,6 +24,12 @@
     <button class="sync-btn" bindtap="syncWords" loading="{{syncing}}">同步单词数据</button>
   </view>
 
+  <view class="section">
+    <text class="section-title">缓存管理</text>
+    <text class="hint" style="margin-bottom: 20rpx;">清除缓存不会影响您的学习记录</text>
+    <button class="clear-btn" bindtap="clearCache">清除缓存</button>
+  </view>
+
   <view class="save-btn" bindtap="saveSettings">
     <text>保存设置</text>
   </view>

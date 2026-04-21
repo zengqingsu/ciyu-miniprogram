@@ -70,6 +70,11 @@
   color: #666;
 }
 
+.clear-btn {
+  background: #ff4d4f;
+  color: #fff;
+}
+
 .save-btn {
   background: #52c41a;
   color: #fff;

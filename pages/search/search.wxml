@@ -22,13 +22,27 @@
     </view>
   </view>
   
+  <!-- 搜索历史 -->
+  <view class="section" wx:elif="{{history.length > 0 && !searched}}">
+    <view class="section-header">
+      <text class="section-title">搜索历史</text>
+      <text class="clear-btn" bindtap="clearHistory">清除</text>
+    </view>
+    <view class="history-list">
+      <text class="history-item" wx:for="{{history}}" wx:key="*this" bindtap="onHotWordTap" data-word="{{item}}">{{item}}</text>
+    </view>
+  </view>
+  
+  <!-- 热门搜索 -->
+  <view class="section" wx:elif="{{!searched}}">
+    <text class="section-title">热门搜索</text>
+    <view class="hot-list">
+      <text class="hot-item" wx:for="{{hotWords}}" wx:key="*this" bindtap="onHotWordTap" data-word="{{item}}">{{item}}</text>
+    </view>
+  </view>
+  
   <!-- 无结果 -->
   <view class="empty" wx:elif="{{searched}}">
     <text>未找到匹配的单词</text>
-  </view>
-  
-  <!-- 提示 -->
-  <view class="hint" wx:else>
-    <text>输入单词进行搜索</text>
   </view>
 </view>

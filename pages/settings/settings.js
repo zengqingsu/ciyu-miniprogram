@@ -84,5 +84,37 @@ Page({
     setTimeout(() => {
       wx.navigateBack();
     }, 1500);
+  },
+  
+  // 清除缓存
+  clearCache() {
+    wx.showModal({
+      title: '清除缓存',
+      content: '确定要清除所有缓存数据吗？学习记录将被保留。',
+      success: (res) => {
+        if (res.confirm) {
+          const keepKeys = ['learningRecords', 'notebook', 'unlockedAchievements', 'reviewRecord', 'apiBase', 'dailyGoal'];
+          const allKeys = wx.getStorageInfoSync().keys;
+          
+          allKeys.forEach(key => {
+            if (!keepKeys.includes(key)) {
+              wx.removeStorageSync(key);
+            }
+          });
+          
+          wx.showToast({
+            title: '缓存已清除',
+            icon: 'success'
+          });
+        }
+      }
+    });
+  },
+  
+  // 查看缓存大小
+  getCacheSize() {
+    const info = wx.getStorageInfoSync();
+    const sizeKB = (info.currentSize / 1024).toFixed(2);
+    return sizeKB;
   }
 });
