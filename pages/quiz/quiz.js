@@ -12,10 +12,31 @@ Page({
     correctCount: 0,
     progress: 0,
     isComplete: false,
+    quizMode: 'choice', // choice: 选择题, fill: 填空题, spell: 拼写题
+    questionCount: 10,
+    modes: [
+      { id: 'choice', name: '选择题', icon: '📝' },
+      { id: 'fill', name: '填空题', icon: '✍️' },
+      { id: 'spell', name: '拼写题', icon: '🔤' }
+    ],
     Math: Math
   },
   
-  onLoad() {
+  onLoad(options) {
+    const mode = options.mode || 'choice';
+    this.setData({ quizMode: mode });
+    this.generateQuestions();
+  },
+  
+  // 切换测试模式
+  switchMode(e) {
+    const mode = e.currentTarget.dataset.mode;
+    this.setData({ 
+      quizMode: mode,
+      isComplete: false,
+      correctCount: 0,
+      currentIndex: 0
+    });
     this.generateQuestions();
   },
   

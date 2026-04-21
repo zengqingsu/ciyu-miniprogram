@@ -1,5 +1,12 @@
 <!--pages/quiz/quiz.wxml-->
 <view class="container">
+  <!-- 模式选择 -->
+  <view class="mode-selector">
+    <text class="mode-btn {{quizMode === item.id ? 'active' : ''}}" wx:for="{{modes}}" wx:key="id" bindtap="switchMode" data-mode="{{item.id}}">
+      {{item.icon}} {{item.name}}
+    </text>
+  </view>
+  
   <!-- 进度 -->
   <view class="progress-section">
     <view class="progress-bar">
@@ -12,6 +19,7 @@
   <view class="question-card" wx:if="{{currentQuestion}}">
     <view class="word-display">
       <text class="word">{{currentQuestion.word}}</text>
+      <text class="phonetic" wx:if="{{currentQuestion.pronunciation}}">{{currentQuestion.pronunciation}}</text>
     </view>
     
     <!-- 选择题选项 -->
