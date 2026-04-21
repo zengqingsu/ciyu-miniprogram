@@ -32,6 +32,31 @@
   margin-bottom: 20rpx;
 }
 
+/* 今日概览 */
+.today-stats {
+  display: flex;
+  justify-content: space-around;
+}
+
+.today-item {
+  text-align: center;
+  padding: 20rpx;
+}
+
+.today-num {
+  display: block;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #667eea;
+  margin-bottom: 10rpx;
+}
+
+.today-label {
+  display: block;
+  font-size: 26rpx;
+  color: #999;
+}
+
 /* 统计网格 */
 .stats-grid {
   display: grid;

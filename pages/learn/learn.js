@@ -9,16 +9,43 @@ Page({
     learnedCount: 0,
     stats: {},
     progress: 0,
-    isAnimating: false
+    isAnimating: false,
+    startTime: null,
+    sessionTime: 0
   },
   
   onLoad() {
     this.loadStats();
     this.loadNextWord();
+    this.startTimer();
   },
   
   onShow() {
     this.loadStats();
+    this.startTimer();
+  },
+  
+  onHide() {
+    this.pauseTimer();
+  },
+  
+  onUnload() {
+    this.pauseTimer();
+  },
+  
+  startTimer() {
+    if (!this.data.startTime) {
+      this.setData({ startTime: Date.now() });
+    }
+  },
+  
+  pauseTimer() {
+    if (this.data.startTime) {
+      const duration = Date.now() - this.data.startTime;
+      const totalTime = wx.getStorageSync('totalLearnTime') || 0;
+      wx.setStorageSync('totalLearnTime', totalTime + duration);
+      this.setData({ startTime: null });
+    }
   },
   
   loadStats() {
@@ -45,6 +72,18 @@ Page({
     this.setData({ isAnimating: true });
     words.markKnown(this.data.word.id);
     
+    // 更新今日学习计数
+    const todayKey = 'todayLearnCount';
+    const today = new Date().toDateString();
+    const lastDate = wx.getStorageSync('lastLearnDate');
+    let count = wx.getStorageSync(todayKey) || 0;
+    if (lastDate !== today) {
+      count = 0;
+    }
+    count += 1;
+    wx.setStorageSync(todayKey, count);
+    wx.setStorageSync('lastLearnDate', today);
+    
     this.setData({
       learnedCount: this.data.learnedCount + 1,
       progress: Math.min(100, this.data.progress + 5)
@@ -62,6 +101,18 @@ Page({
     
     this.setData({ isAnimating: true });
     words.markUnknown(this.data.word.id);
+    
+    // 更新今日学习计数
+    const todayKey = 'todayLearnCount';
+    const today = new Date().toDateString();
+    const lastDate = wx.getStorageSync('lastLearnDate');
+    let count = wx.getStorageSync(todayKey) || 0;
+    if (lastDate !== today) {
+      count = 0;
+    }
+    count += 1;
+    wx.setStorageSync(todayKey, count);
+    wx.setStorageSync('lastLearnDate', today);
     
     this.setData({
       learnedCount: this.data.learnedCount + 1,

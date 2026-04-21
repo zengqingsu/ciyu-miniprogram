@@ -4,21 +4,46 @@ const words = require('../../utils/words.js');
 Page({
   data: {
     stats: {},
-    todayWords: []
+    todayWords: [],
+    greeting: '',
+    dailyGoal: 20,
+    todayProgress: 0
   },
   
   onLoad() {
     this.loadData();
+    this.setGreeting();
   },
   
   onShow() {
     this.loadData();
   },
   
+  setGreeting() {
+    const hour = new Date().getHours();
+    let greeting = '早上好';
+    if (hour >= 6 && hour < 9) greeting = '早上好';
+    else if (hour >= 9 && hour < 12) greeting = '上午好';
+    else if (hour >= 12 && hour < 14) greeting = '中午好';
+    else if (hour >= 14 && hour < 18) greeting = '下午好';
+    else if (hour >= 18 && hour < 22) greeting = '晚上好';
+    else greeting = '夜深了';
+    
+    this.setData({ greeting });
+  },
+  
   loadData() {
     const stats = words.getStats();
     const todayWords = words.getWordsBatch(5);
-    this.setData({ stats, todayWords });
+    const todayProgress = wx.getStorageSync('todayLearnCount') || 0;
+    const dailyGoal = wx.getStorageSync('dailyGoal') || 20;
+    
+    this.setData({ 
+      stats, 
+      todayWords,
+      todayProgress,
+      dailyGoal
+    });
   },
   
   goToLearn() {

@@ -5,6 +5,21 @@
     <text class="title">个人中心</text>
   </view>
   
+  <!-- 今日概览 -->
+  <view class="section">
+    <text class="section-title">今日概览</text>
+    <view class="today-stats">
+      <view class="today-item">
+        <text class="today-num">{{todayCount || 0}}</text>
+        <text class="today-label">今日学习</text>
+      </view>
+      <view class="today-item">
+        <text class="today-num">{{timeText || '0分钟'}}</text>
+        <text class="today-label">累计时长</text>
+      </view>
+    </view>
+  </view>
+  
   <!-- 学习统计 -->
   <view class="section">
     <text class="section-title">学习统计</text>

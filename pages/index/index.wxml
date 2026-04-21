@@ -2,8 +2,20 @@
 <view class="container">
   <!-- 头部 -->
   <view class="header">
+    <text class="greeting">{{greeting}} 👋</text>
     <text class="title">词途</text>
     <text class="subtitle">让背单词变得更简单</text>
+  </view>
+  
+  <!-- 每日目标 -->
+  <view class="goal-card">
+    <view class="goal-header">
+      <text class="goal-title">今日目标</text>
+      <text class="goal-progress">{{todayProgress}}/{{dailyGoal}} 词</text>
+    </view>
+    <view class="goal-progress-bar">
+      <view class="goal-progress-fill" style="width: {{todayProgress/dailyGoal*100}}%"></view>
+    </view>
   </view>
   
   <!-- 统计卡片 -->
