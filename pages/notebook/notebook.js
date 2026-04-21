@@ -3,7 +3,11 @@ const words = require('../../utils/words.js');
 
 Page({
   data: {
-    notebook: []
+    notebook: [],
+    sortType: 'time', // time: 按时间, alpha: 按字母
+    filterCategory: '',
+    categories: [],
+    stats: {}
   },
   
   onShow() {
@@ -11,8 +15,41 @@ Page({
   },
   
   loadData() {
-    const notebook = words.getNotebook();
-    this.setData({ notebook });
+    let notebook = words.getNotebook();
+    const categories = [...new Set(notebook.map(w => w.category).filter(c => c))];
+    
+    // 排序
+    if (this.data.sortType === 'alpha') {
+      notebook = notebook.sort((a, b) => a.word.localeCompare(b.word));
+    } else {
+      notebook = notebook.sort((a, b) => b.addedAt - a.addedAt);
+    }
+    
+    // 筛选
+    if (this.data.filterCategory) {
+      notebook = notebook.filter(w => w.category === this.data.filterCategory);
+    }
+    
+    const stats = {
+      total: words.getNotebook().length,
+      categories: categories.length
+    };
+    
+    this.setData({ notebook, categories, stats });
+  },
+  
+  // 切换排序方式
+  onSortChange(e) {
+    const sortType = e.currentTarget.dataset.type;
+    this.setData({ sortType });
+    this.loadData();
+  },
+  
+  // 筛选分类
+  onFilterChange(e) {
+    const category = e.currentTarget.dataset.category;
+    this.setData({ filterCategory: category === this.data.filterCategory ? '' : category });
+    this.loadData();
   },
   
   // 学习单词

@@ -53,16 +53,24 @@ let notebook = wx.getStorageSync('notebook') || [];
 
 // 成就系统
 const achievements = [
+  // 学习成就
   { id: 'first_learn', name: '初学者', desc: '完成第一次学习', icon: '🌟', condition: (r) => r.total >= 1 },
   { id: 'learn_10', name: '小试牛刀', desc: '学习10个单词', icon: '📚', condition: (r) => r.total >= 10 },
   { id: 'learn_50', name: '学而不厌', desc: '学习50个单词', icon: '🎓', condition: (r) => r.total >= 50 },
   { id: 'learn_100', name: '学霸', desc: '学习100个单词', icon: '🏆', condition: (r) => r.total >= 100 },
+  { id: 'learn_200', name: '词汇大师', desc: '学习200个单词', icon: '🎯', condition: (r) => r.total >= 200 },
+  // 连续学习成就
   { id: 'streak_3', name: '坚持不懈', desc: '连续学习3天', icon: '🔥', condition: (r) => r.streak >= 3 },
   { id: 'streak_7', name: '一周达人', desc: '连续学习7天', icon: '💪', condition: (r) => r.streak >= 7 },
+  { id: 'streak_14', name: '两周坚持', desc: '连续学习14天', icon: '🌈', condition: (r) => r.streak >= 14 },
   { id: 'streak_30', name: '习惯养成', desc: '连续学习30天', icon: '👑', condition: (r) => r.streak >= 30 },
+  // 生词本成就
   { id: 'notebook_5', name: '收藏家', desc: '收藏5个生词', icon: '⭐', condition: (r) => notebook.length >= 5 },
   { id: 'notebook_20', name: '词汇宝库', desc: '收藏20个生词', icon: '💎', condition: (r) => notebook.length >= 20 },
-  { id: 'master_10', name: '掌握者', desc: '掌握10个单词', icon: '✅', condition: (r) => r.known.length >= 10 }
+  // 掌握成就
+  { id: 'master_10', name: '掌握者', desc: '掌握10个单词', icon: '✅', condition: (r) => r.known.length >= 10 },
+  { id: 'master_20', name: '熟能生巧', desc: '掌握20个单词', icon: '🧠', condition: (r) => r.known.length >= 20 },
+  { id: 'master_all', name: '全能王者', desc: '掌握所有单词', icon: '🌟', condition: (r) => r.known.length >= 35 }
 ];
 
 // 获取单词列表
