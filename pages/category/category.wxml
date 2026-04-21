@@ -5,6 +5,14 @@
     <text class="subtitle">按类别选择单词</text>
   </view>
   
+  <!-- 难度筛选 -->
+  <view class="level-filter">
+    <text class="level-btn {{selectedLevel === 0 ? 'active' : ''}}" bindtap="onLevelChange" data-level="0">全部</text>
+    <text class="level-btn {{selectedLevel === 1 ? 'active' : ''}}" bindtap="onLevelChange" data-level="1">简单 ({{levelStats[1]}})</text>
+    <text class="level-btn {{selectedLevel === 2 ? 'active' : ''}}" bindtap="onLevelChange" data-level="2">中等 ({{levelStats[2]}})</text>
+    <text class="level-btn {{selectedLevel === 3 ? 'active' : ''}}" bindtap="onLevelChange" data-level="3">困难 ({{levelStats[3]}})</text>
+  </view>
+  
   <!-- 分类列表 -->
   <view class="category-list">
     <view class="category-item" wx:for="{{categories}}" wx:key="name" bindtap="selectCategory" data-category="{{item}}">

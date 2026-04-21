@@ -65,6 +65,26 @@
     </view>
   </view>
   
+  <!-- 更多快捷操作 -->
+  <view class="quick-actions">
+    <view class="action-item" bindtap="goToReview">
+      <text class="action-icon">📖</text>
+      <text class="action-text">错题复习</text>
+    </view>
+    <view class="action-item" bindtap="goToNotebook">
+      <text class="action-icon">⭐</text>
+      <text class="action-text">生词本</text>
+    </view>
+    <view class="action-item" bindtap="goToListen">
+      <text class="action-icon">👂</text>
+      <text class="action-text">听力练习</text>
+    </view>
+    <view class="action-item" bindtap="goToSearch">
+      <text class="action-icon">🔍</text>
+      <text class="action-text">单词搜索</text>
+    </view>
+  </view>
+  
   <!-- 开始学习按钮 -->
   <view class="start-btn" bindtap="goToLearn">
     <text>开始学习</text>

@@ -80,5 +80,23 @@ Page({
     wx.navigateTo({
       url: '/pages/notebook/notebook'
     });
+  },
+  
+  goToReview() {
+    wx.navigateTo({
+      url: '/pages/review/review'
+    });
+  },
+  
+  goToListen() {
+    wx.navigateTo({
+      url: '/pages/listen/listen'
+    });
+  },
+  
+  goToSearch() {
+    wx.navigateTo({
+      url: '/pages/search/search'
+    });
   }
 });

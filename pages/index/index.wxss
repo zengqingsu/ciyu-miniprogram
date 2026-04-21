@@ -189,6 +189,34 @@
   color: #666;
 }
 
+/* 更多快捷操作 */
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20rpx;
+  margin-bottom: 40rpx;
+}
+
+.action-item {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16rpx;
+  padding: 30rpx 20rpx;
+  text-align: center;
+  box-shadow: 0 5rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.action-icon {
+  display: block;
+  font-size: 44rpx;
+  margin-bottom: 10rpx;
+}
+
+.action-text {
+  display: block;
+  font-size: 22rpx;
+  color: #666;
+}
+
 /* 开始学习按钮 */
 .start-btn {
   background: #52c41a;
