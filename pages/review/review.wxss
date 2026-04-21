@@ -23,6 +23,34 @@
   opacity: 0.8;
 }
 
+/* 进度环 */
+.progress-ring {
+  display: flex;
+  justify-content: center;
+  padding: 40rpx 0;
+  background: #fff;
+  margin: 20rpx;
+  border-radius: 16rpx;
+}
+
+.ring-content {
+  text-align: center;
+}
+
+.ring-percent {
+  display: block;
+  font-size: 56rpx;
+  font-weight: bold;
+  color: #667eea;
+}
+
+.ring-label {
+  display: block;
+  font-size: 26rpx;
+  color: #999;
+  margin-top: 10rpx;
+}
+
 .stats-section {
   display: flex;
   background: #fff;

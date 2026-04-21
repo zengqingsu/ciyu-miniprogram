@@ -51,11 +51,39 @@
 }
 
 .word {
-  display: block;
+  display: inline-block;
   font-size: 72rpx;
   font-weight: bold;
   color: #333;
   margin-bottom: 20rpx;
+}
+
+.word-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.category-tag {
+  display: inline-block;
+  font-size: 24rpx;
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.1);
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+.audio-icon {
+  display: inline-block;
+  font-size: 48rpx;
+  margin-left: 20rpx;
+  opacity: 0.6;
+}
+
+.audio-icon:active {
+  opacity: 1;
 }
 
 .phonetic {

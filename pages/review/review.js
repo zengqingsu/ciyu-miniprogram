@@ -6,7 +6,8 @@ Page({
     unknownWords: [],
     reviewedCount: 0,
     masteredCount: 0,
-    reviewList: []
+    reviewList: [],
+    Math: Math
   },
   
   onShow() {

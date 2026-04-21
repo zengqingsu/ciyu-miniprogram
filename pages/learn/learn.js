@@ -146,5 +146,16 @@ Page({
         icon: 'none'
       });
     }
+  },
+  
+  // 播放发音
+  playAudio() {
+    const word = this.data.word;
+    // 使用微信朗读插件或模拟
+    wx.showToast({
+      title: `🔊 ${word.word}`,
+      icon: 'none',
+      duration: 2000
+    });
   }
 });
