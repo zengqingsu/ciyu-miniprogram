@@ -14,6 +14,7 @@ Page({
     isComplete: false,
     quizMode: 'choice', // choice: 选择题, fill: 填空题, spell: 拼写题
     questionCount: 10,
+    started: false,
     modes: [
       { id: 'choice', name: '选择题', icon: '📝' },
       { id: 'fill', name: '填空题', icon: '✍️' },
@@ -25,6 +26,17 @@ Page({
   onLoad(options) {
     const mode = options.mode || 'choice';
     this.setData({ quizMode: mode });
+  },
+  
+  // 设置题数
+  setQuestionCount(e) {
+    const count = parseInt(e.currentTarget.dataset.count);
+    this.setData({ questionCount: count });
+  },
+  
+  // 开始测试
+  startQuiz() {
+    this.setData({ started: true });
     this.generateQuestions();
   },
   
@@ -42,7 +54,7 @@ Page({
   
   // 生成测试题目
   generateQuestions() {
-    const allWords = words.getWordsBatch(10);
+    const allWords = words.getWordsBatch(this.data.questionCount);
     const questions = allWords.map(word => {
       // 随机打乱其他单词作为干扰选项
       const otherWords = words.getWords()
@@ -118,11 +130,7 @@ Page({
   
   // 重新测试
   retryQuiz() {
-    this.generateQuestions();
-    this.setData({
-      isComplete: false,
-      correctCount: 0
-    });
+    this.setData({ started: false, isComplete: false, correctCount: 0, currentIndex: 0 });
   },
   
   // 返回

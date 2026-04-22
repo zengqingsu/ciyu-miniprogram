@@ -7,12 +7,32 @@
     </text>
   </view>
   
+  <!-- 题数选择 -->
+  <view class="count-selector" wx:if="{{!started}}">
+    <text class="count-label">测试题数：</text>
+    <view class="count-options">
+      <text class="count-btn {{questionCount === 5 ? 'active' : ''}}" bindtap="setQuestionCount" data-count="5">5题</text>
+      <text class="count-btn {{questionCount === 10 ? 'active' : ''}}" bindtap="setQuestionCount" data-count="10">10题</text>
+      <text class="count-btn {{questionCount === 15 ? 'active' : ''}}" bindtap="setQuestionCount" data-count="15">15题</text>
+    </view>
+  </view>
+  
   <!-- 进度 -->
-  <view class="progress-section">
+  <view class="progress-section" wx:if="{{started}}">
     <view class="progress-bar">
       <view class="progress-fill" style="width: {{progress}}%"></view>
     </view>
     <text class="progress-text">{{currentIndex + 1}} / {{questions.length}}</text>
+  </view>
+  
+  <!-- 开始测试按钮 -->
+  <view class="start-section" wx:if="{{!started}}">
+    <view class="start-card">
+      <text class="start-icon">📝</text>
+      <text class="start-title">能力测试</text>
+      <text class="start-desc">选择测试题数，开始挑战</text>
+      <button class="start-btn" bindtap="startQuiz">开始测试</button>
+    </view>
   </view>
   
   <!-- 题目 -->
