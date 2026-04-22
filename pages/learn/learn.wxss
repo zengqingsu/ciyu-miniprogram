@@ -45,6 +45,31 @@
   min-height: 500rpx;
 }
 
+/* 导航栏 */
+.card-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 20rpx;
+  margin-bottom: 20rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.nav-btn {
+  font-size: 26rpx;
+  color: #667eea;
+}
+
+.nav-count {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.nav-placeholder {
+  width: 100rpx;
+}
+
 .word-section {
   text-align: center;
   margin-bottom: 40rpx;

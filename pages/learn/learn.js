@@ -11,7 +11,8 @@ Page({
     progress: 0,
     isAnimating: false,
     startTime: null,
-    sessionTime: 0
+    sessionTime: 0,
+    history: []
   },
   
   onLoad() {
@@ -72,6 +73,10 @@ Page({
     this.setData({ isAnimating: true });
     words.markKnown(this.data.word.id);
     
+    // 记录学习历史
+    const history = [...this.data.history, { ...this.data.word, known: true }];
+    this.setData({ history });
+    
     // 更新今日学习计数
     const todayKey = 'todayLearnCount';
     const today = new Date().toDateString();
@@ -101,6 +106,10 @@ Page({
     
     this.setData({ isAnimating: true });
     words.markUnknown(this.data.word.id);
+    
+    // 记录学习历史
+    const history = [...this.data.history, { ...this.data.word, known: false }];
+    this.setData({ history });
     
     // 更新今日学习计数
     const todayKey = 'todayLearnCount';
@@ -170,5 +179,20 @@ Page({
         });
       }
     });
+  },
+  
+  // 上一词
+  prevWord() {
+    const history = this.data.history;
+    if (history.length > 0) {
+      const prevWord = history[history.length - 1];
+      const newHistory = history.slice(0, -1);
+      this.setData({
+        word: prevWord,
+        history: newHistory,
+        showMeaning: false,
+        learnedCount: Math.max(0, this.data.learnedCount - 1)
+      });
+    }
   }
 });
