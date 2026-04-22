@@ -18,7 +18,11 @@
   "window": {
     "navigationBarTitleText": "词途",
     "navigationBarBackgroundColor": "#667eea",
-    "navigationBarTextStyle": "white"
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5f5f5",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": true,
+    "onReachBottomDistance": 50
   },
   "tabBar": {
     "color": "#999999",

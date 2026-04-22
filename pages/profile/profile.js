@@ -129,5 +129,17 @@ Page({
     wx.navigateTo({
       url: '/pages/listen/listen'
     });
+  },
+  
+  // 下拉刷新
+  onPullDownRefresh() {
+    this.loadData();
+    setTimeout(() => {
+      wx.stopPullDownRefresh();
+      wx.showToast({
+        title: '已刷新',
+        icon: 'success'
+      });
+    }, 500);
   }
 });
