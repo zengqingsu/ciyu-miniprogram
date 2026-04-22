@@ -134,6 +134,28 @@
   color: #52c41a;
 }
 
+.word-actions {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 20rpx;
+}
+
+.action-btn {
+  flex: 1;
+  font-size: 26rpx;
+  padding: 15rpx 0;
+}
+
+.action-btn.study {
+  background: #667eea;
+  color: #fff;
+}
+
+.action-btn.notebook {
+  background: #ffd700;
+  color: #333;
+}
+
 .empty, .hint {
   text-align: center;
   padding: 100rpx 0;

@@ -19,6 +19,10 @@
         <text class="tag level">难度{{item.level}}</text>
         <text class="tag category">{{item.category}}</text>
       </view>
+      <view class="word-actions">
+        <button class="action-btn study" size="mini" bindtap="studyWord" data-word="{{item}}">学习</button>
+        <button class="action-btn notebook" size="mini" bindtap="addToNotebook" data-word="{{item}}">⭐ 收藏</button>
+      </view>
     </view>
   </view>
   

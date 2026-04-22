@@ -58,5 +58,25 @@ Page({
     wx.removeStorageSync('searchHistory');
     this.setData({ history: [] });
     wx.showToast({ title: '已清除历史', icon: 'success' });
+  },
+  
+  // 学习单词
+  studyWord(e) {
+    const word = e.currentTarget.dataset.word;
+    wx.setStorageSync('currentWord', word);
+    wx.switchTab({
+      url: '/pages/learn/learn'
+    });
+  },
+  
+  // 添加到生词本
+  addToNotebook(e) {
+    const word = e.currentTarget.dataset.word;
+    const result = words.addToNotebook(word);
+    if (result) {
+      wx.showToast({ title: '已收藏 ⭐', icon: 'success' });
+    } else {
+      wx.showToast({ title: '已在生词本', icon: 'none' });
+    }
   }
 });
