@@ -8,7 +8,8 @@ Page({
     learnedWords: 0,
     remainingWords: 35,
     daysLeft: 4,
-    Math: Math
+    Math: Math,
+    customGoal: ''
   },
   
   onLoad() {
@@ -39,12 +40,35 @@ Page({
   setGoal(e) {
     const goal = parseInt(e.currentTarget.dataset.goal);
     wx.setStorageSync('dailyGoal', goal);
-    this.setData({ dailyGoal: goal });
+    this.setData({ dailyGoal: goal, customGoal: '' });
     this.loadPlan();
     
     wx.showToast({
       title: '目标已更新',
       icon: 'success'
     });
+  },
+  
+  inputCustomGoal(e) {
+    this.setData({ customGoal: e.detail.value });
+  },
+  
+  setCustomGoal() {
+    const goal = parseInt(this.data.customGoal);
+    if (goal && goal > 0 && goal <= 100) {
+      wx.setStorageSync('dailyGoal', goal);
+      this.setData({ dailyGoal: goal, customGoal: '' });
+      this.loadPlan();
+      
+      wx.showToast({
+        title: `已设置为${goal}词/天`,
+        icon: 'success'
+      });
+    } else {
+      wx.showToast({
+        title: '请输入1-100之间的数字',
+        icon: 'none'
+      });
+    }
   }
 });

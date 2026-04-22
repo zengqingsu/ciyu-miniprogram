@@ -26,6 +26,11 @@
         <text class="goal-label">词/天</text>
       </view>
     </view>
+    <view class="custom-goal">
+      <text class="custom-label">自定义目标：</text>
+      <input class="custom-input" type="number" value="{{customGoal}}" placeholder="输入每日目标" bindinput="inputCustomGoal" bindconfirm="setCustomGoal" confirm-type="done"/>
+      <view class="custom-btn" bindtap="setCustomGoal">确定</view>
+    </view>
   </view>
   
   <!-- 计划周期 -->

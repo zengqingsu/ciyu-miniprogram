@@ -70,6 +70,37 @@
   color: #999;
 }
 
+.custom-goal {
+  display: flex;
+  align-items: center;
+  margin-top: 30rpx;
+  padding-top: 30rpx;
+  border-top: 1rpx solid #eee;
+}
+
+.custom-label {
+  font-size: 28rpx;
+  color: #666;
+  white-space: nowrap;
+}
+
+.custom-input {
+  flex: 1;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  padding: 16rpx 20rpx;
+  margin: 0 20rpx;
+  font-size: 28rpx;
+}
+
+.custom-btn {
+  background: #667eea;
+  color: #fff;
+  padding: 16rpx 30rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+
 .plan-info {
   display: flex;
   flex-direction: column;
