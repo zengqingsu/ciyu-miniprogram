@@ -192,8 +192,8 @@
 /* 更多快捷操作 */
 .quick-actions {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20rpx;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16rpx;
   margin-bottom: 40rpx;
 }
 

@@ -83,6 +83,10 @@
       <text class="action-icon">🔍</text>
       <text class="action-text">单词搜索</text>
     </view>
+    <view class="action-item" bindtap="goToPlan">
+      <text class="action-icon">📋</text>
+      <text class="action-text">学习计划</text>
+    </view>
   </view>
   
   <!-- 开始学习按钮 -->

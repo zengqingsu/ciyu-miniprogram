@@ -98,5 +98,11 @@ Page({
     wx.navigateTo({
       url: '/pages/search/search'
     });
+  },
+  
+  goToPlan() {
+    wx.navigateTo({
+      url: '/pages/plan/plan'
+    });
   }
 });
