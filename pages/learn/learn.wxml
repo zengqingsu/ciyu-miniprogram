@@ -17,7 +17,7 @@
     <!-- 单词 -->
     <view class="word-section">
       <view class="word-header">
-        <text class="word">{{word.word}}</text>
+        <text class="word" bindtap="playAudio" bindlongpress="copyWord">{{word.word}}</text>
         <text class="category-tag" wx:if="{{word.category}}">{{word.category}}</text>
       </view>
       <text class="phonetic">{{word.pronunciation}}</text>

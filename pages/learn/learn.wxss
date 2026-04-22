@@ -58,6 +58,10 @@
   margin-bottom: 20rpx;
 }
 
+.word:active {
+  color: #667eea;
+}
+
 .word-header {
   display: flex;
   align-items: center;

@@ -54,6 +54,14 @@
     </view>
   </view>
   
+  <!-- 连续学习 -->
+  <view class="section streak-section" wx:if="{{records.streak > 0}}">
+    <view class="streak-badge">
+      <text class="streak-icon">🔥</text>
+      <text class="streak-text">连续学习 {{records.streak}} 天</text>
+    </view>
+  </view>
+  
   <!-- 已学单词列表 -->
   <view class="section" wx:if="{{records.known && records.known.length > 0}}">
     <text class="section-title">已掌握单词</text>
@@ -79,7 +87,7 @@
   
   <!-- 版本信息 -->
   <view class="footer">
-    <text>词途小程序 v1.0</text>
+    <text>词途小程序 v1.4</text>
     <text>让背单词变得更简单</text>
   </view>
 </view>

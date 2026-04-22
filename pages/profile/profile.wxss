@@ -112,6 +112,28 @@
   display: block;
 }
 
+/* 连续学习 */
+.streak-section {
+  background: linear-gradient(135deg, #ff6b6b, #ffa500);
+}
+
+.streak-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15rpx;
+}
+
+.streak-icon {
+  font-size: 48rpx;
+}
+
+.streak-text {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #fff;
+}
+
 /* 单词列表 */
 .words-list {
   display: flex;

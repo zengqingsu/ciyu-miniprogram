@@ -157,5 +157,18 @@ Page({
       icon: 'none',
       duration: 2000
     });
+  },
+  
+  // 长按复制单词
+  copyWord() {
+    wx.setClipboardData({
+      data: this.data.word.word,
+      success: () => {
+        wx.showToast({
+          title: '已复制',
+          icon: 'success'
+        });
+      }
+    });
   }
 });
