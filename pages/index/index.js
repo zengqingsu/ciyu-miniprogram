@@ -104,5 +104,14 @@ Page({
     wx.navigateTo({
       url: '/pages/plan/plan'
     });
+  },
+  
+  // 今日推荐单词点击跳转学习
+  goToWord(e) {
+    const word = e.currentTarget.dataset.word;
+    wx.setStorageSync('currentWord', word);
+    wx.switchTab({
+      url: '/pages/learn/learn'
+    });
   }
 });

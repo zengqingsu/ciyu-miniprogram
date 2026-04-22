@@ -40,10 +40,16 @@
   
   <!-- 今日单词预览 -->
   <view class="today-section">
-    <text class="section-title">今日推荐</text>
+    <view class="section-header">
+      <text class="section-title">今日推荐</text>
+      <text class="section-tip">点击开始学习</text>
+    </view>
     <view class="words-list">
-      <view class="word-item" wx:for="{{todayWords}}" wx:key="id">
-        <text class="word-text">{{item.word}}</text>
+      <view class="word-item" wx:for="{{todayWords}}" wx:key="id" bindtap="goToWord" data-word="{{item}}">
+        <view class="word-top">
+          <text class="word-text">{{item.word}}</text>
+          <text class="word-level" wx:if="{{item.level}}">Lv{{item.level}}</text>
+        </view>
         <text class="word-meaning">{{item.meaning}}</text>
       </view>
     </view>
