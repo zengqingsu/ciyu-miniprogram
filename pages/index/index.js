@@ -164,5 +164,13 @@ Page({
         icon: 'success'
       });
     }, 500);
+  },
+
+  // 分享给朋友
+  onShareAppMessage() {
+    return {
+      title: '词途 - 让背单词变得更简单',
+      path: '/pages/index/index'
+    };
   }
 });
