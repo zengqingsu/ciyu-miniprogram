@@ -205,10 +205,12 @@
 .btn-unknown {
   background: #ff4d4f;
   color: #fff;
+  transition: transform 0.1s;
 }
 
 .btn-unknown:active {
   background: #d9363e;
+  transform: scale(0.95);
 }
 
 .btn-show {
@@ -223,10 +225,12 @@
 .btn-known {
   background: #52c41a;
   color: #fff;
+  transition: transform 0.1s;
 }
 
 .btn-known:active {
   background: #389e0d;
+  transform: scale(0.95);
 }
 
 /* 跳过按钮 */
