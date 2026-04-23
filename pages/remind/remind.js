@@ -17,12 +17,16 @@ Page({
   },
   
   loadSettings() {
-    const remindSettings = wx.getStorageSync('remindSettings') || {};
-    this.setData({
-      enabled: remindSettings.enabled || false,
-      time: remindSettings.time || '09:00',
-      frequency: remindSettings.frequency || 'daily'
-    });
+    try {
+      const remindSettings = wx.getStorageSync('remindSettings') || {};
+      this.setData({
+        enabled: remindSettings.enabled || false,
+        time: remindSettings.time || '09:00',
+        frequency: remindSettings.frequency || 'daily'
+      });
+    } catch (e) {
+      // 忽略错误，使用默认值
+    }
   },
   
   onSwitchChange(e) {
