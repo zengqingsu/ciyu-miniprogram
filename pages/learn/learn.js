@@ -84,6 +84,11 @@ Page({
     this.setData({ isAnimating: true });
     words.markKnown(this.data.word.id);
     
+    // 震动反馈
+    if (wx.vibrateShort) {
+      wx.vibrateShort();
+    }
+    
     // 记录学习历史
     const history = [...this.data.history, { ...this.data.word, known: true }];
     this.setData({ history });
@@ -144,6 +149,11 @@ Page({
     
     this.setData({ isAnimating: true });
     words.markUnknown(this.data.word.id);
+    
+    // 震动反馈（不认识时震动不同模式）
+    if (wx.vibrateShort) {
+      wx.vibrateShort({ type: 'heavy' });
+    }
     
     // 记录学习历史
     const history = [...this.data.history, { ...this.data.word, known: false }];

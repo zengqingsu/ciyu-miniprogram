@@ -27,6 +27,13 @@
   border-radius: 8rpx;
 }
 
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 60rpx;
+  color: #999;
+}
+
 /* 区块 */
 .section {
   background: #fff;

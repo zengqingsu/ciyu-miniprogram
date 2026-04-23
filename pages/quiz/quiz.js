@@ -99,6 +99,11 @@ Page({
     const currentQuestion = this.data.currentQuestion;
     const isCorrect = index === currentQuestion.correctIndex;
     
+    // 震动反馈
+    if (wx.vibrateShort) {
+      wx.vibrateShort({ success: isCorrect });
+    }
+    
     this.setData({
       selectedAnswer: index,
       showResult: true,
