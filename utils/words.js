@@ -82,6 +82,34 @@ function getWordsList() {
   return localWords;
 }
 
+// 洗牌算法 - 避免连续重复
+function shuffleArray(array) {
+  const shuffled = [...array];
+  // 使用 Fisher-Yates 洗牌
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+// 获取已学习单词ID集合
+function getLearnedWordIds() {
+  const records = wx.getStorageSync('learningRecords') || {};
+  return new Set([...(records.known || []), ...(records.unknown || [])]);
+}
+
+// 检查单词是否已掌握（根据艾宾浩斯遗忘曲线）
+function isMastered(wordId) {
+  const reviewRecord = wx.getStorageSync('reviewRecord') || {};
+  const lastReview = reviewRecord[wordId];
+  if (!lastReview) return false;
+  
+  // 30天后仍记得就算掌握
+  const daysPassed = (Date.now() - lastReview) / (1000 * 60 * 60 * 24);
+  return daysPassed >= 30;
+}
+
 // 艾宾浩斯复习提醒
 function shouldReview(wordId) {
   const reviewRecord = wx.getStorageSync('reviewRecord') || {};
@@ -98,13 +126,40 @@ module.exports = {
   getWords: () => getWordsList(),
   
   getRandomWord: () => {
-    const words = getWordsList();
-    return words[Math.floor(Math.random() * words.length)];
+    const allWords = getWordsList();
+    const learnedIds = getLearnedWordIds();
+    
+    // 优先获取未学习的单词
+    const unlearned = allWords.filter(w => !learnedIds.has(w.id));
+    if (unlearned.length > 0) {
+      return unlearned[Math.floor(Math.random() * unlearned.length)];
+    }
+    
+    // 全部学完了，从未掌握中随机
+    const unknown = allWords.filter(w => 
+      learnedIds.has(w.id) && !isMastered(w.id)
+    );
+    if (unknown.length > 0) {
+      return unknown[Math.floor(Math.random() * unknown.length)];
+    }
+    
+    // 随机返回
+    return allWords[Math.floor(Math.random() * allWords.length)];
   },
   
   getWordsBatch: (count = 10) => {
-    const words = getWordsList();
-    const shuffled = [...words].sort(() => Math.random() - 0.5);
+    const allWords = getWordsList();
+    const learnedIds = getLearnedWordIds();
+    
+    // 优先返回未学习单词
+    const unlearned = allWords.filter(w => !learnedIds.has(w.id));
+    if (unlearned.length >= count) {
+      return shuffleArray(unlearned).slice(0, count);
+    }
+    
+    // 混合未学习+未掌握
+    const notMastered = allWords.filter(w => !isMastered(w.id));
+    const shuffled = shuffleArray(notMastered);
     return shuffled.slice(0, count);
   },
   
