@@ -55,6 +55,17 @@ Page({
   },
   
   loadNextWord() {
+    // 检查是否有预加载的单词
+    const currentWord = wx.getStorageSync('currentWord');
+    if (currentWord && !this.data.isAnimating) {
+      wx.removeStorageSync('currentWord');
+      this.setData({ 
+        word: currentWord, 
+        showMeaning: false,
+        isAnimating: false
+      });
+      return;
+    }
     const word = words.getRandomWord();
     this.setData({ 
       word, 

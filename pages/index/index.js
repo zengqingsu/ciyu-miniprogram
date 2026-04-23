@@ -7,7 +7,8 @@ Page({
     todayWords: [],
     greeting: '',
     dailyGoal: 20,
-    todayProgress: 0
+    todayProgress: 0,
+    lastLoadTime: 0
   },
   
   onLoad() {
@@ -16,7 +17,11 @@ Page({
   },
   
   onShow() {
-    this.loadData();
+    // 节流：1秒内不重复加载
+    const now = Date.now();
+    if (now - this.data.lastLoadTime > 1000) {
+      this.loadData();
+    }
   },
   
   setGreeting() {
@@ -32,7 +37,13 @@ Page({
     this.setData({ greeting });
   },
   
-  loadData() {
+  loadData(force = false) {
+    // 缓存：5秒内不重复加载
+    const now = Date.now();
+    if (!force && now - this.data.lastLoadTime < 5000) {
+      return;
+    }
+    
     const stats = words.getStats();
     const todayWords = words.getWordsBatch(5);
     const todayProgress = wx.getStorageSync('todayLearnCount') || 0;
@@ -42,7 +53,8 @@ Page({
       stats, 
       todayWords,
       todayProgress,
-      dailyGoal
+      dailyGoal,
+      lastLoadTime: now
     });
   },
   
