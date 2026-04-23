@@ -71,6 +71,10 @@ Page({
       content: '确定要从生词本中删除这个单词吗？',
       success: (res) => {
         if (res.confirm) {
+          // 删除震动反馈
+          if (wx.vibrateShort) {
+            wx.vibrateShort();
+          }
           words.removeFromNotebook(wordId);
           that.loadData();
           wx.showToast({

@@ -193,6 +193,10 @@ Page({
     const word = this.data.word;
     const added = words.addToNotebook(word);
     if (added) {
+      // 收藏成功震动
+      if (wx.vibrateShort) {
+        wx.vibrateShort();
+      }
       wx.showToast({
         title: '已加入生词本 ⭐',
         icon: 'success'
