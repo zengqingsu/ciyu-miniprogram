@@ -105,11 +105,38 @@ Page({
       progress: Math.min(100, this.data.progress + 5)
     });
     
+    // 更新连续学习天数
+    this.updateStreak();
+    
     // 动画效果后加载下一个
     setTimeout(() => {
       this.loadNextWord();
       this.loadStats();
     }, 300);
+  },
+  
+  // 更新连续学习天数
+  updateStreak() {
+    const today = new Date().toDateString();
+    const yesterday = this.getYesterday();
+    const lastStreakDate = wx.getStorageSync('streakDate');
+    const currentStreak = wx.getStorageSync('streak') || 0;
+    
+    if (lastStreakDate === yesterday) {
+      // 昨天学习了，今天继续则连续
+      wx.setStorageSync('streak', currentStreak + 1);
+    } else if (lastStreakDate !== today) {
+      // 不是昨天也不是今天，重置
+      wx.setStorageSync('streak', 1);
+    }
+    wx.setStorageSync('streakDate', today);
+  },
+  
+  // 获取昨天日期
+  getYesterday() {
+    const date = new Date();
+    date.setDate(date.getDate() - 1);
+    return date.toDateString();
   },
   
   markForget() {
