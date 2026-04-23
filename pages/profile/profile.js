@@ -8,6 +8,15 @@ Page({
     isLoading: true
   },
   
+  // 导航提示
+  showNavigateToast(title) {
+    wx.showToast({
+      title,
+      icon: 'none',
+      duration: 800
+    });
+  },
+  
   onLoad() {
     this.loadData();
   },
@@ -70,6 +79,7 @@ Page({
   
   // 跳转到设置页面
   goToSettings() {
+    this.showNavigateToast('⚙️ 设置');
     wx.navigateTo({
       url: '/pages/settings/settings'
     });
@@ -77,6 +87,7 @@ Page({
   
   // 跳转到提醒设置
   goToRemind() {
+    this.showNavigateToast('🔔 提醒设置');
     wx.navigateTo({
       url: '/pages/remind/remind'
     });
@@ -84,6 +95,7 @@ Page({
   
   // 跳转到生词本
   goToNotebook() {
+    this.showNavigateToast('⭐ 生词本');
     wx.navigateTo({
       url: '/pages/notebook/notebook'
     });
@@ -91,6 +103,7 @@ Page({
   
   // 跳转到测试
   goToQuiz() {
+    this.showNavigateToast('📝 能力测试');
     wx.navigateTo({
       url: '/pages/quiz/quiz'
     });
@@ -98,6 +111,7 @@ Page({
   
   // 跳转到成就
   goToAchievement() {
+    this.showNavigateToast('🏆 成就徽章');
     wx.navigateTo({
       url: '/pages/achievement/achievement'
     });
@@ -105,6 +119,7 @@ Page({
   
   // 跳转到搜索
   goToSearch() {
+    this.showNavigateToast('🔍 单词搜索');
     wx.navigateTo({
       url: '/pages/search/search'
     });
@@ -112,6 +127,7 @@ Page({
   
   // 跳转到每日任务
   goToDaily() {
+    this.showNavigateToast('📅 每日任务');
     wx.navigateTo({
       url: '/pages/daily/daily'
     });
@@ -119,6 +135,7 @@ Page({
   
   // 跳转到学习计划
   goToPlan() {
+    this.showNavigateToast('📋 学习计划');
     wx.navigateTo({
       url: '/pages/plan/plan'
     });
@@ -126,6 +143,7 @@ Page({
   
   // 跳转到错题复习
   goToReview() {
+    this.showNavigateToast('📖 错题复习');
     wx.navigateTo({
       url: '/pages/review/review'
     });
@@ -133,6 +151,7 @@ Page({
   
   // 跳转到听力练习
   goToListen() {
+    this.showNavigateToast('👂 听力练习');
     wx.navigateTo({
       url: '/pages/listen/listen'
     });

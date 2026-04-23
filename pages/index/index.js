@@ -12,6 +12,15 @@ Page({
     isLoading: true  // 新增 loading 状态
   },
   
+  // 导航提示
+  showNavigateToast(title) {
+    wx.showToast({
+      title,
+      icon: 'none',
+      duration: 800
+    });
+  },
+  
   onLoad() {
     this.loadData();
     this.setGreeting();
@@ -95,31 +104,37 @@ Page({
   },
   
   goToDaily() {
+    this.showNavigateToast('📅 每日任务');
     wx.navigateTo({
       url: '/pages/daily/daily'
     });
   },
   
   goToNotebook() {
+    this.showNavigateToast('⭐ 生词本');
     wx.navigateTo({
       url: '/pages/notebook/notebook'
     });
   },
   
   goToReview() {
+    this.showNavigateToast('📖 错题复习');
     wx.navigateTo({
       url: '/pages/review/review'
     });
   },
   
   goToListen() {
+    this.showNavigateToast('👂 听力练习');
     wx.navigateTo({
       url: '/pages/listen/listen'
     });
   },
   
   goToSearch() {
+    this.showNavigateToast('🔍 单词搜索');
     wx.navigateTo({
+      url: '/pages/search/search'
       url: '/pages/search/search'
     });
   },
