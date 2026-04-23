@@ -12,9 +12,10 @@ Page({
     correctCount: 0,
     progress: 0,
     isComplete: false,
-    quizMode: 'choice', // choice: 选择题, fill: 填空题, spell: 拼写题
+    quizMode: 'choice',
     questionCount: 10,
     started: false,
+    isLoading: false,
     modes: [
       { id: 'choice', name: '选择题', icon: '📝' },
       { id: 'fill', name: '填空题', icon: '✍️' },
@@ -36,8 +37,13 @@ Page({
   
   // 开始测试
   startQuiz() {
-    this.setData({ started: true });
-    this.generateQuestions();
+    this.setData({ started: true, isLoading: true });
+    
+    // 模拟加载延迟，改善体验
+    setTimeout(() => {
+      this.generateQuestions();
+      this.setData({ isLoading: false });
+    }, 500);
   },
   
   // 切换测试模式

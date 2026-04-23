@@ -55,20 +55,21 @@ Page({
   
   setCustomGoal() {
     const goal = parseInt(this.data.customGoal);
-    if (goal && goal > 0 && goal <= 100) {
-      wx.setStorageSync('dailyGoal', goal);
-      this.setData({ dailyGoal: goal, customGoal: '' });
-      this.loadPlan();
-      
-      wx.showToast({
-        title: `已设置为${goal}词/天`,
-        icon: 'success'
-      });
-    } else {
+    if (!goal || goal <= 0 || goal > 100) {
       wx.showToast({
         title: '请输入1-100之间的数字',
         icon: 'none'
       });
+      return;
     }
+    
+    wx.setStorageSync('dailyGoal', goal);
+    this.setData({ dailyGoal: goal, customGoal: '' });
+    this.loadPlan();
+    
+    wx.showToast({
+      title: `已设置为${goal}词/天`,
+      icon: 'success'
+    });
   }
 });

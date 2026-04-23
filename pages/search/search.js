@@ -6,6 +6,7 @@ Page({
     keyword: '',
     results: [],
     searched: false,
+    isLoading: false,
     hotWords: ['apple', 'book', 'study', 'work', 'love', 'happy', 'time', 'food'],
     history: []
   },
@@ -27,6 +28,8 @@ Page({
       return;
     }
     
+    this.setData({ isLoading: true, searched: true });
+    
     // 保存到搜索历史
     const history = this.data.history;
     if (!history.includes(keyword)) {
@@ -36,14 +39,17 @@ Page({
       this.setData({ history });
     }
     
-    const allWords = words.getWords();
-    const results = allWords.filter(w => 
-      w.word.toLowerCase().includes(keyword) || 
-      w.meaning.includes(keyword) ||
-      w.category.includes(keyword)
-    );
-    
-    this.setData({ results, searched: true });
+    // 模拟网络延迟优化体验
+    setTimeout(() => {
+      const allWords = words.getWords();
+      const results = allWords.filter(w => 
+        w.word.toLowerCase().includes(keyword) || 
+        w.meaning.includes(keyword) ||
+        w.category.includes(keyword)
+      );
+      
+      this.setData({ results, isLoading: false });
+    }, 300);
   },
   
   // 点击热门搜索词
