@@ -171,12 +171,36 @@ Page({
   // 播放发音
   playAudio() {
     const word = this.data.word;
-    // 使用微信朗读插件或模拟
-    wx.showToast({
-      title: `🔊 ${word.word}`,
-      icon: 'none',
-      duration: 2000
-    });
+    try {
+      // 使用微信朗读插件或模拟
+      const plugin = requirePlugin('WechatSI');
+      if (plugin && plugin.textToSpeech) {
+        plugin.textToSpeech({
+          content: word.word,
+          success: (res) => {
+            console.log('播放成功', res);
+          },
+          fail: (err) => {
+            wx.showToast({
+              title: '播放失败',
+              icon: 'none'
+            });
+          }
+        });
+      } else {
+        wx.showToast({
+          title: `🔊 ${word.word}`,
+          icon: 'none',
+          duration: 2000
+        });
+      }
+    } catch (e) {
+      wx.showToast({
+        title: `🔊 ${word.word}`,
+        icon: 'none',
+        duration: 2000
+      });
+    }
   },
   
   // 长按复制单词

@@ -8,7 +8,8 @@ Page({
     greeting: '',
     dailyGoal: 20,
     todayProgress: 0,
-    lastLoadTime: 0
+    lastLoadTime: 0,
+    isLoading: true  // 新增 loading 状态
   },
   
   onLoad() {
@@ -44,18 +45,29 @@ Page({
       return;
     }
     
-    const stats = words.getStats();
-    const todayWords = words.getWordsBatch(5);
-    const todayProgress = wx.getStorageSync('todayLearnCount') || 0;
-    const dailyGoal = wx.getStorageSync('dailyGoal') || 20;
+    this.setData({ isLoading: true });  // 显示loading
     
-    this.setData({ 
-      stats, 
-      todayWords,
-      todayProgress,
-      dailyGoal,
-      lastLoadTime: now
-    });
+    try {
+      const stats = words.getStats();
+      const todayWords = words.getWordsBatch(5);
+      const todayProgress = wx.getStorageSync('todayLearnCount') || 0;
+      const dailyGoal = wx.getStorageSync('dailyGoal') || 20;
+      
+      this.setData({ 
+        stats, 
+        todayWords,
+        todayProgress,
+        dailyGoal,
+        lastLoadTime: now,
+        isLoading: false
+      });
+    } catch (e) {
+      this.setData({ isLoading: false });
+      wx.showToast({
+        title: '加载失败',
+        icon: 'none'
+      });
+    }
   },
   
   goToLearn() {

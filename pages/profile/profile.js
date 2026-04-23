@@ -4,7 +4,8 @@ const words = require('../../utils/words.js');
 Page({
   data: {
     stats: {},
-    records: {}
+    records: {},
+    isLoading: true
   },
   
   onLoad() {
@@ -16,31 +17,37 @@ Page({
   },
   
   loadData() {
-    const stats = words.getStats();
-    const records = words.getRecords();
-    
-    // 获取学习时长
-    const totalTime = wx.getStorageSync('totalLearnTime') || 0;
-    const todayKey = 'todayLearnCount';
-    const today = new Date().toDateString();
-    const lastDate = wx.getStorageSync('lastLearnDate');
-    let todayCount = wx.getStorageSync(todayKey) || 0;
-    if (lastDate !== today) {
-      todayCount = 0;
+    this.setData({ isLoading: true });
+    try {
+      const stats = words.getStats();
+      const records = words.getRecords();
+      
+      // 获取学习时长
+      const totalTime = wx.getStorageSync('totalLearnTime') || 0;
+      const todayKey = 'todayLearnCount';
+      const today = new Date().toDateString();
+      const lastDate = wx.getStorageSync('lastLearnDate');
+      let todayCount = wx.getStorageSync(todayKey) || 0;
+      if (lastDate !== today) {
+        todayCount = 0;
+      }
+      
+      // 格式化学习时长
+      const totalMinutes = Math.floor(totalTime / 60000);
+      const hours = Math.floor(totalMinutes / 60);
+      const minutes = totalMinutes % 60;
+      const timeText = hours > 0 ? `${hours}小时${minutes}分钟` : `${minutes}分钟`;
+      
+      this.setData({ 
+        stats, 
+        records,
+        todayCount,
+        timeText,
+        isLoading: false
+      });
+    } catch (e) {
+      this.setData({ isLoading: false });
     }
-    
-    // 格式化学习时长
-    const totalMinutes = Math.floor(totalTime / 60000);
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
-    const timeText = hours > 0 ? `${hours}小时${minutes}分钟` : `${minutes}分钟`;
-    
-    this.setData({ 
-      stats, 
-      records,
-      todayCount,
-      timeText
-    });
   },
   
   // 清除学习记录

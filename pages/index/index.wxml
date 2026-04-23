@@ -1,5 +1,11 @@
 <!--pages/index/index.wxml-->
 <view class="container">
+  <!-- Loading 状态 -->
+  <view class="loading-mask" wx:if="{{isLoading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+  
   <!-- 头部 -->
   <view class="header">
     <text class="greeting">{{greeting}} 👋</text>
