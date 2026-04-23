@@ -7,6 +7,7 @@ Page({
     reviewedCount: 0,
     masteredCount: 0,
     reviewList: [],
+    isLoading: true,
     Math: Math
   },
   
@@ -15,23 +16,29 @@ Page({
   },
   
   loadReviewData() {
-    const records = words.getRecords();
-    const allWords = words.getWords();
-    
-    // 获取答错的单词
-    const unknownIds = records.unknown || [];
-    const unknownWords = unknownIds.map(id => {
-      return allWords.find(w => w.id === id);
-    }).filter(w => w).map(w => ({...w, showAnswer: false}));
-    
-    // 获取已复习记录
-    const reviewList = wx.getStorageSync('reviewList') || [];
-    
-    this.setData({
-      unknownWords,
-      reviewedCount: reviewList.length,
-      masteredCount: reviewList.filter(r => r.mastered).length
-    });
+    this.setData({ isLoading: true });
+    try {
+      const records = words.getRecords();
+      const allWords = words.getWords();
+      
+      // 获取答错的单词
+      const unknownIds = records.unknown || [];
+      const unknownWords = unknownIds.map(id => {
+        return allWords.find(w => w.id === id);
+      }).filter(w => w).map(w => ({...w, showAnswer: false}));
+      
+      // 获取已复习记录
+      const reviewList = wx.getStorageSync('reviewList') || [];
+      
+      this.setData({
+        unknownWords,
+        reviewedCount: reviewList.length,
+        masteredCount: reviewList.filter(r => r.mastered).length,
+        isLoading: false
+      });
+    } catch (e) {
+      this.setData({ isLoading: false });
+    }
   },
   
   toggleAnswer(e) {
