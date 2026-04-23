@@ -5,7 +5,8 @@ Page({
   data: {
     achievements: [],
     unlockedCount: 0,
-    totalCount: 0
+    totalCount: 0,
+    isLoading: true
   },
   
   onShow() {
@@ -13,13 +14,19 @@ Page({
   },
   
   loadAchievements() {
-    const achievements = words.getAchievements();
-    const unlockedCount = achievements.filter(a => a.unlocked).length;
-    
-    this.setData({
-      achievements,
-      unlockedCount,
-      totalCount: achievements.length
-    });
+    this.setData({ isLoading: true });
+    try {
+      const achievements = words.getAchievements();
+      const unlockedCount = achievements.filter(a => a.unlocked).length;
+      
+      this.setData({
+        achievements,
+        unlockedCount,
+        totalCount: achievements.length,
+        isLoading: false
+      });
+    } catch (e) {
+      this.setData({ isLoading: false });
+    }
   }
 });

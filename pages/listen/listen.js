@@ -13,6 +13,7 @@ Page({
     answered: false,
     correctCount: 0,
     isComplete: false,
+    isLoading: false,
     Math: Math
   },
   
@@ -21,33 +22,38 @@ Page({
   },
   
   generateQuestions() {
-    const allWords = words.getWordsBatch(this.data.totalQuestions);
+    this.setData({ isLoading: true });
     
-    const questions = allWords.map(word => {
-      const otherWords = words.getWords()
-        .filter(w => w.id !== word.id)
-        .sort(() => Math.random() - 0.5)
-        .slice(0, 3);
+    setTimeout(() => {
+      const allWords = words.getWordsBatch(this.data.totalQuestions);
       
-      const options = [word.word, ...otherWords.map(w => w.word)]
-        .sort(() => Math.random() - 0.5);
+      const questions = allWords.map(word => {
+        const otherWords = words.getWords()
+          .filter(w => w.id !== word.id)
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 3);
+        
+        const options = [word.word, ...otherWords.map(w => w.word)]
+          .sort(() => Math.random() - 0.5);
+        
+        return {
+          word: word.word,
+          pronunciation: word.pronunciation,
+          meaning: word.meaning,
+          options: options,
+          correctAnswer: word.word
+        };
+      });
       
-      return {
-        word: word.word,
-        pronunciation: word.pronunciation,
-        meaning: word.meaning,
-        options: options,
-        correctAnswer: word.word
-      };
-    });
-    
-    this.setData({
-      questions,
-      currentQuestion: questions[0],
-      currentIndex: 0,
-      correctCount: 0,
-      isComplete: false
-    });
+      this.setData({
+        questions,
+        currentQuestion: questions[0],
+        currentIndex: 0,
+        correctCount: 0,
+        isComplete: false,
+        isLoading: false
+      });
+    }, 300);
   },
   
   playAudio() {
