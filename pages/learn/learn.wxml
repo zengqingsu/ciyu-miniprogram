@@ -28,8 +28,18 @@
         <text class="category-tag" wx:if="{{word.category}}">{{word.category}}</text>
       </view>
       <text class="phonetic">{{word.pronunciation}}</text>
-      <view class="audio-icon" bindtap="playAudio">
-        <text>🔊</text>
+      
+      <!-- 发音控制 -->
+      <view class="audio-controls">
+        <view class="audio-icon" bindtap="playAudio">
+          <text>🔊</text>
+        </view>
+        <view class="speed-control">
+          <text class="speed-label">速度:</text>
+          <view class="speed-btn {{speechRate === 0.75 ? 'active' : ''}}" bindtap="changeSpeed" data-rate="0.75">慢</view>
+          <view class="speed-btn {{speechRate === 1.0 ? 'active' : ''}}" bindtap="changeSpeed" data-rate="1.0">普</view>
+          <view class="speed-btn {{speechRate === 1.25 ? 'active' : ''}}" bindtap="changeSpeed" data-rate="1.25">快</view>
+        </view>
       </view>
     </view>
     

@@ -172,5 +172,36 @@ Page({
       title: '词途 - 让背单词变得更简单',
       path: '/pages/index/index'
     };
+  },
+  
+  // 分享到朋友圈
+  onShareTimeline() {
+    const stats = words.getStats();
+    return {
+      title: `词途 - 我已学习${stats.total}词，连续${stats.streak}天`,
+      query: '',
+      imageUrl: ''
+    };
+  },
+  
+  // 生成分享海报
+  generatePoster() {
+    const stats = words.getStats();
+    const that = this;
+    
+    wx.showLoading({ title: '生成中...' });
+    
+    // 延迟一下让loading显示
+    setTimeout(() => {
+      wx.hideLoading();
+      
+      // 显示分享指引
+      wx.showModal({
+        title: '分享海报',
+        content: `我的学习成就\n总词汇: ${stats.total}\n连续学习: ${stats.streak}天\n请截图分享到朋友圈`,
+        showCancel: false,
+        confirmText: '知道了'
+      });
+    }, 500);
   }
 });

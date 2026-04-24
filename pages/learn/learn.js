@@ -12,13 +12,18 @@ Page({
     isAnimating: false,
     startTime: null,
     sessionTime: 0,
-    history: []
+    history: [],
+    // 发音设置
+    speechRate: 1.0, // 0.5-2.0
+    speechPitch: 1.0,
+    pronunciationUrl: ''
   },
   
   onLoad() {
     this.loadStats();
     this.loadNextWord();
     this.startTimer();
+    this.loadAudioSettings();
   },
   
   onShow() {
@@ -209,11 +214,33 @@ Page({
     }
   },
   
+  // 加载发音设置
+  loadAudioSettings() {
+    const audioSettings = wx.getStorageSync('audioSettings') || {};
+    this.setData({
+      speechRate: audioSettings.rate || 1.0,
+      speechPitch: audioSettings.pitch || 1.0
+    });
+  },
+  
+  // 切换发音速度
+  changeSpeed(e) {
+    const rate = parseFloat(e.currentTarget.dataset.rate);
+    this.setData({ speechRate: rate });
+    wx.setStorageSync('audioSettings', {
+      ...wx.getStorageSync('audioSettings'),
+      rate: rate
+    });
+    // 测试新速度
+    this.playAudio();
+  },
+  
   // 播放发音
   playAudio() {
     const word = this.data.word;
+    const that = this;
+    
     try {
-      // 使用微信朗读插件或模拟
       const plugin = requirePlugin('WechatSI');
       if (plugin && plugin.textToSpeech) {
         plugin.textToSpeech({
@@ -222,26 +249,25 @@ Page({
             console.log('播放成功', res);
           },
           fail: (err) => {
-            wx.showToast({
-              title: '播放失败',
-              icon: 'none'
-            });
+            that.fallbackPlayAudio(word.word);
           }
         });
       } else {
-        wx.showToast({
-          title: `🔊 ${word.word}`,
-          icon: 'none',
-          duration: 2000
-        });
+        that.fallbackPlayAudio(word.word);
       }
     } catch (e) {
-      wx.showToast({
-        title: `🔊 ${word.word}`,
-        icon: 'none',
-        duration: 2000
-      });
+      that.fallbackPlayAudio(word.word);
     }
+  },
+  
+  // 备用发音（显示文字）
+  fallbackPlayAudio(wordText) {
+    // 如果没有插件，显示文字发音
+    wx.showToast({
+      title: `🔊 ${wordText}`,
+      icon: 'none',
+      duration: 1500
+    });
   },
   
   // 长按复制单词

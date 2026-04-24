@@ -33,6 +33,36 @@
     </view>
   </view>
   
+  <!-- 提醒设置 -->
+  <view class="section">
+    <text class="section-title">学习提醒</text>
+    <view class="reminder-toggle">
+      <text class="toggle-label">每日提醒</text>
+      <switch checked="{{reminderEnabled}}" bindchange="toggleReminder" color="#667eea"/>
+    </view>
+    <view class="reminder-options" wx:if="{{reminderEnabled}}">
+      <view class="time-picker">
+        <text class="picker-label">提醒时间</text>
+        <picker mode="time" value="{{reminderTime}}" bindchange="onTimeChange">
+          <text class="picker-value">{{reminderTime}}</text>
+        </picker>
+      </view>
+      <view class="days-picker">
+        <text class="picker-label">重复日期</text>
+        <view class="days-grid">
+          <view class="day-item {{reminderDays.indexOf('0') > -1 ? 'active' : ''}}" bindtap="toggleDay" data-index="0">日</view>
+          <view class="day-item {{reminderDays.indexOf('1') > -1 ? 'active' : ''}}" bindtap="toggleDay" data-index="1">一</view>
+          <view class="day-item {{reminderDays.indexOf('2') > -1 ? 'active' : ''}}" bindtap="toggleDay" data-index="2">二</view>
+          <view class="day-item {{reminderDays.indexOf('3') > -1 ? 'active' : ''}}" bindtap="toggleDay" data-index="3">三</view>
+          <view class="day-item {{reminderDays.indexOf('4') > -1 ? 'active' : ''}}" bindtap="toggleDay" data-index="4">四</view>
+          <view class="day-item {{reminderDays.indexOf('5') > -1 ? 'active' : ''}}" bindtap="toggleDay" data-index="5">五</view>
+          <view class="day-item {{reminderDays.indexOf('6') > -1 ? 'active' : ''}}" bindtap="toggleDay" data-index="6">六</view>
+        </view>
+      </view>
+      <view class="test-btn" bindtap="testReminder">测试提醒</view>
+    </view>
+  </view>
+  
   <!-- 计划周期 -->
   <view class="section">
     <text class="section-title">计划周期</text>
