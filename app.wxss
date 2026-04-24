@@ -1,0 +1,455 @@
+/* app.wxss - 全局样式与主题配置 */
+
+/* ========== 主题色 ========== */
+page {
+  /* 主色调 */
+  --primary: #667eea;
+  --primary-light: #8b9cf5;
+  --primary-dark: #4f56c7;
+  
+  /* 辅助色 */
+  --secondary: #f093fb;
+  --accent: #f5576c;
+  
+  /* 中性色 */
+  --text: #333333;
+  --text-light: #666666;
+  --text-lighter: #999999;
+  --text-white: #ffffff;
+  
+  /* 背景色 */
+  --bg: #f5f5f5;
+  --bg-white: #ffffff;
+  --bg-card: #ffffff;
+  --bg-hover: #f0f0f0;
+  
+  /* 状态色 */
+  --success: #52c41a;
+  --warning: #faad14;
+  --error: #f5222d;
+  --info: #1890ff;
+  
+  /* 边框 */
+  --border: #e8e8e8;
+  --border-light: #f0f0f0;
+  
+  /* 阴影 */
+  --shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8rpx 24rpx rgba(0, 0, 0, 0.12);
+  
+  /* 圆角 */
+  --radius: 12rpx;
+  --radius-sm: 8rpx;
+  --radius-lg: 16rpx;
+  --radius-xl: 24rpx;
+  --radius-full: 9999rpx;
+  
+  /* 字号 */
+  --font-xs: 20rpx;
+  --font-sm: 24rpx;
+  --font-md: 28rpx;
+  --font-lg: 32rpx;
+  --font-xl: 36rpx;
+  --font-xxl: 40rpx;
+  
+  /* 间距 */
+  --space-xs: 8rpx;
+  --space-sm: 16rpx;
+  --space-md: 24rpx;
+  --space-lg: 32rpx;
+  --space-xl: 48rpx;
+  
+  background: var(--bg);
+  font-size: var(--font-md);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ========== 通用组件 ========== */
+
+/* 容器 */
+.container {
+  padding: var(--space-md);
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+/* 卡片 */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+/* 按钮 - 主色 */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius);
+  font-size: var(--font-md);
+  font-weight: 500;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.btn:active {
+  transform: scale(0.98);
+  opacity: 0.9;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--text-white);
+}
+
+.btn-primary:active {
+  background: var(--primary-dark);
+}
+
+.btn-secondary {
+  background: var(--bg-hover);
+  color: var(--text);
+}
+
+.btn-success {
+  background: var(--success);
+  color: var(--text-white);
+}
+
+.btn-danger {
+  background: var(--error);
+  color: var(--text-white);
+}
+
+/* 按钮 - 轮廓 */
+.btn-outline {
+  background: transparent;
+  border: 2rpx solid var(--primary);
+  color: var(--primary);
+}
+
+.btn-outline:active {
+  background: var(--primary);
+  color: var(--text-white);
+}
+
+/* 文字按钮 */
+.btn-text {
+  background: transparent;
+  color: var(--primary);
+  padding: var(--space-xs) var(--space-sm);
+}
+
+/* ========== 布局工具 ========== */
+
+/* Flex 布局 */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+/* 文本 */
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.text-success {
+  color: var(--success);
+}
+
+.text-warning {
+  color: var(--warning);
+}
+
+.text-error {
+  color: var(--error);
+}
+
+.text-light {
+  color: var(--text-light);
+}
+
+.text-lighter {
+  color: var(--text-lighter);
+}
+
+.text-white {
+  color: var(--text-white);
+}
+
+.text-sm {
+  font-size: var(--font-sm);
+}
+
+.text-lg {
+  font-size: var(--font-lg);
+}
+
+.text-xl {
+  font-size: var(--font-xl);
+}
+
+.text-bold {
+  font-weight: 600;
+}
+
+/* ========== 间距工具 ========== */
+.mt-xs { margin-top: var(--space-xs); }
+.mt-sm { margin-top: var(--space-sm); }
+.mt-md { margin-top: var(--space-md); }
+.mt-lg { margin-top: var(--space-lg); }
+
+.mb-xs { margin-bottom: var(--space-xs); }
+.mb-sm { margin-bottom: var(--space-sm); }
+.mb-md { margin-bottom: var(--space-md); }
+.mb-lg { margin-bottom: var(--space-lg); }
+
+.ml-xs { margin-left: var(--space-xs); }
+.ml-sm { margin-left: var(--space-sm); }
+.ml-md { margin-left: var(--space-md); }
+.ml-lg { margin-left: var(--space-lg); }
+
+.mr-xs { margin-right: var(--space-xs); }
+.mr-sm { margin-right: var(--space-sm); }
+.mr-md { margin-right: var(--space-md); }
+.mr-lg { margin-right: var(--space-lg); }
+
+.p-xs { padding: var(--space-xs); }
+.p-sm { padding: var(--space-sm); }
+.p-md { padding: var(--space-md); }
+.p-lg { padding: var(--space-lg); }
+
+/* ========== 动画 ========== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.3s ease;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+/* 抖动效果（用于错误反馈） */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-10rpx); }
+  40% { transform: translateX(10rpx); }
+  60% { transform: translateX(-10rpx); }
+  80% { transform: translateX(10rpx); }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease;
+}
+
+/* ========== 空状态 ========== */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl) var(--space-md);
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: var(--space-md);
+}
+
+.empty-title {
+  font-size: var(--font-lg);
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: var(--space-xs);
+}
+
+.empty-text {
+  font-size: var(--font-sm);
+  color: var(--text-lighter);
+  text-align: center;
+}
+
+/* ========== 加载状态 ========== */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+}
+
+.loading-text {
+  color: var(--text-lighter);
+  font-size: var(--font-sm);
+  margin-left: var(--space-sm);
+}
+
+/* ========== 分割线 ========== */
+.divider {
+  height: 1rpx;
+  background: var(--border-light);
+  margin: var(--space-md) 0;
+}
+
+.divider-text {
+  display: flex;
+  align-items: center;
+  color: var(--text-lighter);
+  font-size: var(--font-sm);
+}
+
+.divider-text::before,
+.divider-text::after {
+  content: '';
+  flex: 1;
+  height: 1rpx;
+  background: var(--border-light);
+}
+
+.divider-text::before {
+  margin-right: var(--space-sm);
+}
+
+.divider-text::after {
+  margin-left: var(--space-sm);
+}
+
+/* ========== 徽章 ========== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36rpx;
+  height: 36rpx;
+  padding: 0 var(--space-xs);
+  border-radius: var(--radius-full);
+  font-size: var(--font-xs);
+  font-weight: 500;
+}
+
+.badge-primary {
+  background: var(--primary);
+  color: var(--text-white);
+}
+
+.badge-success {
+  background: var(--success);
+  color: var(--text-white);
+}
+
+.badge-warning {
+  background: var(--warning);
+  color: var(--text);
+}
+
+.badge-error {
+  background: var(--error);
+  color: var(--text-white);
+}
+
+/* ========== 进度条 ========== */
+.progress {
+  height: 8rpx;
+  background: var(--bg-hover);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: var(--primary);
+  border-radius: var(--radius-full);
+  transition: width 0.3s ease;
+}
+
+/* ========== 标签栏 ========== */
+.tab-bar {
+  display: flex;
+  background: var(--bg-white);
+  border-top: 1rpx solid var(--border);
+}
+
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm) 0;
+  color: var(--text-lighter);
+  font-size: var(--font-xs);
+}
+
+.tab-item.active {
+  color: var(--primary);
+}
+
+/* ========== 底部安全区 ========== */
+.safe-area-bottom {
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}

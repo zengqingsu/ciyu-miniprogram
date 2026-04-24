@@ -102,28 +102,96 @@ function getLearnedWordIds() {
 // 检查单词是否已掌握（根据艾宾浩斯遗忘曲线）
 function isMastered(wordId) {
   const reviewRecord = wx.getStorageSync('reviewRecord') || {};
-  const lastReview = reviewRecord[wordId];
-  if (!lastReview) return false;
+  const mastery = reviewRecord[wordId];
+  if (!mastery || !mastery.intervals) return false;
   
-  // 30天后仍记得就算掌握
-  const daysPassed = (Date.now() - lastReview) / (1000 * 60 * 60 * 24);
-  return daysPassed >= 30;
+  // 达到30天间隔且连续答对就算掌握
+  return mastery.intervals.length >= 5 && mastery.masteredAt && 
+    (Date.now() - mastery.masteredAt) / (1000 * 60 * 60 * 24) >= 1;
 }
 
-// 艾宾浩斯复习提醒
+// 艾宾浩斯复习提醒 - 基于遗忘曲线计算下次复习时间
 function shouldReview(wordId) {
   const reviewRecord = wx.getStorageSync('reviewRecord') || {};
-  const lastReview = reviewRecord[wordId];
+  const mastery = reviewRecord[wordId];
+  
+  // 首次学习，需要复习
+  if (!mastery || !mastery.intervals || mastery.intervals.length === 0) {
+    return true;
+  }
+  
+  // 根据当前间隔等级计算下次复习时间
+  const intervals = [1, 3, 7, 14, 30]; // 艾宾浩斯标准间隔（天）
+  const currentInterval = intervals[mastery.intervals.length - 1] || 30;
+  const lastReview = mastery.lastReview;
+  
   if (!lastReview) return true;
   
   const daysPassed = (Date.now() - lastReview) / (1000 * 60 * 60 * 24);
-  const intervals = [1, 3, 7, 14, 30];
   
-  return intervals.some(interval => Math.abs(daysPassed - interval) < 0.5);
+  // 到了复习时间点
+  return daysPassed >= currentInterval - 0.5;
+}
+
+// 获取艾宾浩斯复习间隔（天）
+function getReviewInterval(intervalsCompleted) {
+  const intervals = [1, 3, 7, 14, 30, 60]; // 递增复习间隔
+  return intervals[Math.min(intervalsCompleted, intervals.length - 1)];
+}
+
+// 计算下次复习日期
+function getNextReviewDate(wordId) {
+  const reviewRecord = wx.getStorageSync('reviewRecord') || {};
+  const mastery = reviewRecord[wordId];
+  if (!mastery || !mastery.intervals) return null;
+  
+  const interval = getReviewInterval/mastery.intervals.length);
+  const nextReview = mastery.lastReview + interval * 24 * 60 * 60 * 1000;
+  return new Date(nextReview);
+}
+
+// 获取复习统计数据
+function getReviewStats() {
+  const allWords = getWordsList();
+  const reviewRecord = wx.getStorageSync('reviewRecord') || {};
+  
+  const overdue = []; // 需要复习
+  const today = []; // 今天
+  const upcoming = []; // 未来
+  
+  allWords.forEach(word => {
+    const mastery = reviewRecord[word.id];
+    if (!mastery || !mastery.intervals || mastery.intervals.length === 0) {
+      overdue.push(word);
+      return;
+    }
+    
+    const interval = getReviewInterval(mastery.intervals.length);
+    const daysPassed = (Date.now() - mastery.lastReview) / (1000 * 60 * 60 * 24);
+    
+    if (daysPassed >= interval - 0.5) {
+      overdue.push(word);
+    } else if (daysPassed >= interval - 1) {
+      today.push(word);
+    } else {
+      upcoming.push(word);
+    }
+  });
+  
+  return {
+    overdue: overdue.length,
+    today: today.length,
+    upcoming: upcoming.length,
+    total: allWords.length
+  };
 }
 
 module.exports = {
   getWords: () => getWordsList(),
+  
+  getReviewStats: () => getReviewStats(),
+  getReviewInterval: (n) => getReviewInterval(n),
+  getNextReviewDate: (wordId) => getNextReviewDate(wordId),
   
   getRandomWord: () => {
     const allWords = getWordsList();

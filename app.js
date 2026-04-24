@@ -1,4 +1,7 @@
 // app.js
+const storage = require('./utils/storage.js');
+const performance = require('./utils/performance.js');
+
 App({
   onLaunch() {
     console.log('小程序启动');
@@ -12,6 +15,9 @@ App({
     
     // 检查连续学习天数
     this.checkStreak();
+    
+    // 自动备份数据
+    storage.autoBackup();
     
     // 显示欢迎信息
     const hasShownWelcome = wx.getStorageSync('hasShownWelcome');
