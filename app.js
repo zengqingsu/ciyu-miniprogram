@@ -67,6 +67,6 @@ App({
   
   globalData: {
     userInfo: null,
-    version: '1.5'
+    version: '1.6'
   }
 });
