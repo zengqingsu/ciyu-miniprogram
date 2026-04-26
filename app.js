@@ -1,6 +1,7 @@
 // app.js
 const storage = require('./utils/storage.js');
 const performance = require('./utils/performance.js');
+const cloudSync = require('./utils/cloudSync.js');
 
 App({
   onLaunch() {
@@ -10,14 +11,20 @@ App({
   
   // 初始化应用
   initApp() {
+    // 初始化云开发
+    cloudSync.initCloud();
+    
     // 检查并初始化每日学习数据
     this.checkDailyReset();
     
     // 检查连续学习天数
     this.checkStreak();
     
-    // 自动备份数据
+    // 自动备份数据（本地）
     storage.autoBackup();
+    
+    // 自动云同步检查
+    cloudSync.scheduleSync();
     
     // 显示欢迎信息
     const hasShownWelcome = wx.getStorageSync('hasShownWelcome');

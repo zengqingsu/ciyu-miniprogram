@@ -1,6 +1,7 @@
 // pages/settings/settings.js
 const api = require('../../utils/api.js');
 const words = require('../../utils/words.js');
+const cloudSync = require('../../utils/cloudSync.js');
 
 Page({
   data: {
@@ -9,15 +10,21 @@ Page({
     testResult: '',
     syncing: false,
     localCount: 0,
-    onlineCount: 0
+    onlineCount: 0,
+    cloudSyncing: false,
+    lastSyncTime: '',
+    syncStatus: ''
   },
   
   onLoad() {
     // 读取保存的API地址
     const apiBase = wx.getStorageSync('apiBase') || '';
+    const lastSync = wx.getStorageSync('lastCloudSync');
+    
     this.setData({ 
       apiBase,
-      localCount: words.getWords().length
+      localCount: words.getWords().length,
+      lastSyncTime: lastSync ? new Date(lastSync).toLocaleString() : '从未同步'
     });
     api.setApiBase(apiBase);
   },
@@ -69,6 +76,51 @@ Page({
       });
     } finally {
       this.setData({ syncing: false });
+    }
+  },
+  
+  // 云同步 - 手动触发
+  async manualCloudSync() {
+    this.setData({ cloudSyncing: true, syncStatus: '同步中...' });
+    
+    try {
+      const result = await cloudSync.sync();
+      
+      if (result.success) {
+        this.setData({ 
+          syncStatus: '✅ 同步成功',
+          lastSyncTime: new Date().toLocaleString()
+        });
+      } else {
+        this.setData({ syncStatus: '⚠️ ' + result.message });
+      }
+    } catch (err) {
+      this.setData({ syncStatus: '❌ 同步失败: ' + err.message });
+    } finally {
+      this.setData({ cloudSyncing: false });
+    }
+  },
+  
+  // 查看云端数据
+  async viewCloudData() {
+    wx.showLoading({ title: '加载中...' });
+    
+    try {
+      const result = await cloudSync.downloadData();
+      wx.hideLoading();
+      
+      if (result.success) {
+        wx.showModal({
+          title: '云端数据',
+          content: result.message + '\n时间: ' + new Date().toLocaleString(),
+          showCancel: false
+        });
+      } else {
+        wx.showToast({ title: result.message, icon: 'none' });
+      }
+    } catch (err) {
+      wx.hideLoading();
+      wx.showToast({ title: '加载失败', icon: 'none' });
     }
   },
   

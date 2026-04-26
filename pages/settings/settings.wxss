@@ -75,6 +75,23 @@
   color: #fff;
 }
 
+.cloud-sync-btn {
+  background: #1890ff;
+  color: #fff;
+  margin-bottom: 20rpx;
+}
+
+.view-cloud-btn {
+  background: #722ed1;
+  color: #fff;
+  margin-bottom: 20rpx;
+}
+
+.status {
+  color: #1890ff;
+  font-weight: bold;
+}
+
 .save-btn {
   background: #52c41a;
   color: #fff;

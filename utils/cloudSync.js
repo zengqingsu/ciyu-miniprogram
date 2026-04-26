@@ -1,91 +1,86 @@
-// utils/cloudSync.js - 云同步工具（技术验证版）
+// utils/cloudSync.js - 云同步工具
 const storage = require('./storage.js');
 
 /**
  * 云同步模块
- * 说明：此为技术验证原型，需开通云开发环境后投入使用
+ * 支持：数据上云、多设备同步、离线优先
  */
 
-// 云数据库引用（需在app.js中初始化）
+// 云开发配置（需在微信开发者工具中开通云开发）
+const CLOUD_ENV = 'ciyu-miniprogram'; // TODO: 替换为你的云环境ID
+
 let db = null;
 let cloud = null;
+let openId = null;
 
 /**
  * 初始化云开发
  */
 function initCloud() {
   if (!wx.cloud) {
-    console.warn('请开通云开发环境');
+    console.warn('请在微信开发者工具中开通云开发环境');
     return false;
   }
   
-  cloud = wx.cloud;
-  db = cloud.database();
-  
-  // 设置环境ID（需在project.config.json中配置）
-  // cloud.init({ env: 'your-env-id' });
-  
-  console.log('云开发已初始化');
-  return true;
+  try {
+    cloud = wx.cloud;
+    cloud.init({
+      env: CLOUD_ENV
+    });
+    db = cloud.database();
+    console.log('云开发已初始化');
+    return true;
+  } catch (err) {
+    console.error('云开发初始化失败', err);
+    return false;
+  }
 }
 
 /**
- * 获取用户唯一标识（(openId）
+ * 获取用户openId（通过云函数）
  */
 async function getOpenId() {
-  return new Promise((resolve, reject) => {
-    cloud.callFunction({
-      name: 'login',
-      data: {},
-      success: res => {
-        resolve(res.result.openId);
-      },
-      fail: err => {
-        console.error('获取openId失败', err);
-        resolve(null);
-      }
+  if (openId) return openId;
+  
+  try {
+    const result = await cloud.callFunction({
+      name: 'getOpenId'
     });
-  });
+    openId = result.result.openId;
+    console.log('获取openId成功', openId);
+    return openId;
+  } catch (err) {
+    console.error('获取openId失败', err);
+    return null;
+  }
 }
 
 /**
- * 上传数据到云端
- * @param {string} openId - 用户唯一标识
+ * 上传数据到云端（调用云函数）
+ * @param {Object} userData - 用户数据
  */
-async function uploadData(openId) {
-  if (!db) {
-    return { success: false, message: '云数据库未初始化' };
+async function uploadData(userData) {
+  if (!userData) {
+    userData = storage.exportData();
   }
   
+  // 添加同步元数据
+  userData.lastSyncTime = Date.now();
+  userData._deviceId = wx.getStorageSync('deviceId') || generateDeviceId();
+  
   try {
-    // 1. 导出本地数据
-    const localData = storage.exportData();
-    localData.lastSyncTime = Date.now();
-    localData._openId = openId;
+    const result = await cloud.callFunction({
+      name: 'syncUserData',
+      data: { userData }
+    });
     
-    // 2. 尝试获取云端数据（用于判断新增或更新）
-    let cloudData = null;
-    try {
-      cloudData = await db.collection('userData').doc(openId).get();
-    } catch (e) {
-      // 不存在，创建新的
-    }
-    
-    // 3. 上传到云端
-    if (cloudData) {
-      // 更新
-      await db.collection('userData').doc(openId).update({
-        data: localData
-      });
+    if (result.result && result.result.success) {
+      console.log('数据已同步到云端');
+      return { success: true };
     } else {
-      // 新增
-      await db.collection('userData').doc(openId).set({
-        data: localData
-      });
+      console.error('同步失败', result.result.message);
+      return { success: false, message: result.result.message };
     }
-    
-    console.log('数据已同步到云端');
-    return { success: true };
   } catch (err) {
     console.error('上传失败', err);
     return { success: false, message: err.message };
@@ -94,34 +89,33 @@ async function uploadData(openId) {
 
 /**
  * 从云端下载数据
- * @param {string} openId - 用户唯一标识
  */
-async function downloadData(openId) {
-  if (!db) {
-    return { success: false, message: '云数据库未初始化' };
-  }
-  
+async function downloadData() {
   try {
-    const result = await db.collection('userData').doc(openId).get();
+    const result = await cloud.callFunction({
+      name: 'getUserData'
+    });
     
-    if (!result.data) {
-      return { success: false, message: '云端无数据' };
-    }
-    
-    const cloudData = result.data;
-    const localData = storage.exportData();
-    
-    // 检查时间戳，决定是否合并
-    const cloudTime = cloudData.lastSyncTime || 0;
-    const localTime = localData.lastSyncTime || 0;
-    
-    if (cloudTime > localTime) {
-      // 云端数据更新，覆盖本地
-      storage.importData(cloudData);
-      console.log('数据已从云端同步');
-      return { success: true, message: '已更新' };
+    if (result.result && result.result.success) {
+      const cloudData = result.result.data;
+      
+      // 检查时间戳进行合并
+      const localData = storage.exportData();
+      const cloudTime = cloudData.lastSyncTime || 0;
+      const localTime = localData.lastSyncTime || 0;
+      
+      if (cloudTime > localTime) {
+        // 云端数据更新，覆盖本地
+        storage.importData(cloudData);
+        console.log('数据已从云端同步');
+        return { success: true, message: '已更新' };
+      } else {
+        // 本地数据更新，需要上传
+        console.log('本地已是最新');
+        return { success: true, message: '本地已是最新' };
+      }
     } else {
-      return { success: true, message: '本地已是最新' };
+      return { success: false, message: result.result.message };
     }
   } catch (err) {
     console.error('下载失败', err);
@@ -130,37 +124,95 @@ async function downloadData(openId) {
 }
 
 /**
- * 自动同步（当有网络时）
+ * 自动同步
+ * 策略：先下后上，冲突以最新时间戳为准
  */
-async function autoSync(openId) {
-  // 先尝试下载云端数据
-  const downloadResult = await downloadData(openId);
-  
-  // 再上传本地数据
-  if (downloadResult.message !== '本地已是最新') {
-    await uploadData(openId);
+async function sync() {
+  // 检查网络
+  const network = await checkNetwork();
+  if (!network) {
+    console.log('无网络，跳过同步');
+    return { success: false, message: '无网络' };
   }
+  
+  // 确保有openId
+  const oid = await getOpenId();
+  if (!oid) {
+    return { success: false, message: '无法获取openId' };
+  }
+  
+  // 尝试从云端下载
+  const downloadResult = await downloadData();
+  
+  // 如果云端不是最新，上传本��数据
+  if (downloadResult.message !== '本地已是最新') {
+    await uploadData();
+  }
+  
+  return { success: true };
 }
 
 /**
- * 检查网络状态并同步
+ * 检查网络状态
  */
-async function checkAndSync() {
+function checkNetwork() {
   return new Promise((resolve) => {
     wx.getNetworkType({
-      success: async (res) => {
-        if (res.networkType === 'wifi' || res.networkType === '4g') {
-          // 有网络，执行同步
-          const openId = await getOpenId();
-          await autoSync(openId);
-          resolve(true);
-        } else {
-          resolve(false);
-        }
+      success: (res) => {
+        const hasNetwork = res.networkType !== 'none';
+        resolve(hasNetwork);
       },
       fail: () => resolve(false)
     });
   });
+}
+
+/**
+ * 生成设备ID
+ */
+function generateDeviceId() {
+  const deviceId = wx.getStorageSync('deviceId');
+  if (deviceId) return deviceId;
+  
+  const newId = 'device_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+  wx.setStorageSync('deviceId', newId);
+  return newId;
+}
+
+/**
+ * 手动触发同步（供页面调用）
+ */
+function manualSync() {
+  wx.showLoading({ title: '同步中...' });
+  
+  sync().then((result) => {
+    wx.hideLoading();
+    
+    if (result.success) {
+      wx.showToast({ title: '已同步', icon: 'success' });
+    } else {
+      wx.showToast({ title: result.message || '同步失败', icon: 'none' });
+    }
+  }).catch((err) => {
+    wx.hideLoading();
+    wx.showToast({ title: '同步失败', icon: 'none' });
+  });
+}
+
+/**
+ * 定时同步（通过后台定时器）
+ * 注意：小程序没有真正的后台定时器，需依赖用户打开
+ */
+function scheduleSync() {
+  const lastSync = wx.getStorageSync('lastCloudSync') || 0;
+  const now = Date.now();
+  const ONE_DAY = 24 * 60 * 60 * 1000;
+  
+  // 每天首次使用自动同步
+  if (now - lastSync > ONE_DAY) {
+    manualSync();
+    wx.setStorageSync('lastCloudSync', now);
+  }
 }
 
 module.exports = {
@@ -168,6 +220,8 @@ module.exports = {
   getOpenId,
   uploadData,
   downloadData,
-  autoSync,
-  checkAndSync
+  sync,
+  manualSync,
+  scheduleSync,
+  checkNetwork
 };
