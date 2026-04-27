@@ -99,6 +99,14 @@
       <text class="action-icon">📋</text>
       <text class="action-text">学习计划</text>
     </view>
+    <view class="action-item" bindtap="goToLeaderboard">
+      <text class="action-icon">📊</text>
+      <text class="action-text">排行榜</text>
+    </view>
+    <view class="action-item" bindtap="goToPK">
+      <text class="action-icon">⚔️</text>
+      <text class="action-text">好友PK</text>
+    </view>
   </view>
   
   <!-- 开始学习按钮 -->

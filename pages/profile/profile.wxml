@@ -89,7 +89,8 @@
   
   <!-- 版本信息 -->
   <view class="footer">
-    <text>词途小程序 v1.4</text>
+    <text>词途小程序 v1.6</text>
     <text>让背单词变得更简单</text>
+    <text class="sync-status">{{syncStatus}}</text>
   </view>
 </view>

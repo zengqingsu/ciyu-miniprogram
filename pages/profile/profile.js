@@ -47,11 +47,16 @@ Page({
       const minutes = totalMinutes % 60;
       const timeText = hours > 0 ? `${hours}小时${minutes}分钟` : `${minutes}分钟`;
       
+      // 云同步状态
+      const lastSync = wx.getStorageSync('lastSyncTime') || null;
+      const syncStatus = lastSync ? `上次同步: ${new Date(lastSync).toLocaleString()}` : '未同步';
+      
       this.setData({ 
         stats, 
         records,
         todayCount,
         timeText,
+        syncStatus,
         isLoading: false
       });
     } catch (e) {

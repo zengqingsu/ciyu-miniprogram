@@ -10,6 +10,7 @@
     <text>今日学习: {{learnedCount}} 词</text>
     <text>认识: {{stats.known || 0}}</text>
     <text>不认识: {{stats.unknown || 0}}</text>
+    <text class="time-text" wx:if="{{sessionTime > 0}}">⏱ {{sessionTime}}分钟</text>
   </view>
   
   <!-- 单词卡片 -->
@@ -76,5 +77,10 @@
   <!-- 跳过按钮 -->
   <view class="skip" bindtap="skipWord">
     <text>跳过</text>
+  </view>
+  
+  <!-- 分享按钮 -->
+  <view class="share-btn" bindtap="shareAchievement">
+    <text>📤 分享成就</text>
   </view>
 </view>

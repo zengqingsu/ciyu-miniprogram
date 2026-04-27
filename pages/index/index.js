@@ -135,13 +135,26 @@ Page({
     this.showNavigateToast('🔍 单词搜索');
     wx.navigateTo({
       url: '/pages/search/search'
-      url: '/pages/search/search'
     });
   },
   
   goToPlan() {
     wx.navigateTo({
       url: '/pages/plan/plan'
+    });
+  },
+  
+  goToLeaderboard() {
+    this.showNavigateToast('📊 排行榜');
+    wx.navigateTo({
+      url: '/pages/leaderboard/leaderboard'
+    });
+  },
+  
+  goToPK() {
+    this.showNavigateToast('⚔️ 好友PK');
+    wx.navigateTo({
+      url: '/pages/pk/pk'
     });
   },
   

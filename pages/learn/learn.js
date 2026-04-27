@@ -24,6 +24,27 @@ Page({
     this.loadNextWord();
     this.startTimer();
     this.loadAudioSettings();
+    this.resumeSession();
+  },
+  
+  // 恢复上次学习进度
+  resumeSession() {
+    const progress = wx.getStorageSync('learnProgress');
+    if (progress && progress.learnedCount > 0) {
+      // 显示欢迎回来提示
+      wx.showModal({
+        title: '继续学习',
+        content: `上次学习了 ${progress.learnedCount} 个单词，是否继续？`,
+        confirmText: '继续',
+        cancelText: '重新开始',
+        success: (res) => {
+          if (!res.confirm) {
+            // 重新开始，清除进度
+            wx.removeStorageSync('learnProgress');
+          }
+        }
+      });
+    }
   },
   
   onShow() {
@@ -37,12 +58,31 @@ Page({
   
   onUnload() {
     this.pauseTimer();
+    // 保存学习进度
+    this.saveProgress();
+  },
+  
+  // 保存学习进度
+  saveProgress() {
+    const progress = {
+      learnedCount: this.data.learnedCount,
+      historyLength: this.data.history.length,
+      sessionTime: this.data.sessionTime,
+      lastWord: this.data.word
+    };
+    wx.setStorageSync('learnProgress', progress);
   },
   
   startTimer() {
     if (!this.data.startTime) {
       this.setData({ startTime: Date.now() });
     }
+    // 启动计时器
+    this.timerInterval = setInterval(() => {
+      const duration = Date.now() - this.data.startTime;
+      const minutes = Math.floor(duration / 60000);
+      this.setData({ sessionTime: minutes });
+    }, 60000); // 每分钟更新一次
   },
   
   pauseTimer() {
@@ -51,6 +91,11 @@ Page({
       const totalTime = wx.getStorageSync('totalLearnTime') || 0;
       wx.setStorageSync('totalLearnTime', totalTime + duration);
       this.setData({ startTime: null });
+    }
+    // 清除计时器
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+      this.timerInterval = null;
     }
   },
   
@@ -296,5 +341,33 @@ Page({
         learnedCount: Math.max(0, this.data.learnedCount - 1)
       });
     }
+  },
+  
+  // 分享学习成就
+  shareAchievement() {
+    const stats = words.getStats();
+    const streak = wx.getStorageSync('streak') || 0;
+    
+    wx.showModal({
+      title: '📤 分享成就',
+      content: `今日学习: ${this.data.learnedCount} 词\n连续学习: ${streak} 天\n掌握单词: ${stats.known || 0} 个\n\n快来和我一起学习吧！`,
+      confirmText: '分享',
+      cancelText: '取消',
+      success: (res) => {
+        if (res.confirm) {
+          // 触发分享
+          this.onShareAppMessage();
+        }
+      }
+    });
+  },
+  
+  // 分享给朋友
+  onShareAppMessage() {
+    const streak = wx.getStorageSync('streak') || 0;
+    return {
+      title: `我在词途连续学习${streak}天啦！`,
+      path: '/pages/index/index'
+    };
   }
 });

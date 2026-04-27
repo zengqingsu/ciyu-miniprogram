@@ -23,8 +23,11 @@ App({
     // 自动备份数据（本地）
     storage.autoBackup();
     
-    // 自动云同步检查
-    cloudSync.scheduleSync();
+    // 自动云同步（检查是否开启）
+    const autoSync = wx.getStorageSync('autoSync');
+    if (autoSync !== false) {
+      cloudSync.scheduleSync();
+    }
     
     // 显示欢迎信息
     const hasShownWelcome = wx.getStorageSync('hasShownWelcome');

@@ -30,6 +30,8 @@
       <text>上次同步: {{lastSyncTime}}</text>
       <text class="status">{{syncStatus}}</text>
     </view>
+    <switch class="auto-sync-switch" checked="{{autoSync}}" bindchange="toggleAutoSync" />
+    <text class="switch-label">自动同步</text>
     <button class="cloud-sync-btn" bindtap="manualCloudSync" loading="{{cloudSyncing}}">
       立即云同步
     </button>

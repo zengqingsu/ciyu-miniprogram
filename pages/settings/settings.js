@@ -13,18 +13,21 @@ Page({
     onlineCount: 0,
     cloudSyncing: false,
     lastSyncTime: '',
-    syncStatus: ''
+    syncStatus: '',
+    autoSync: true
   },
   
   onLoad() {
     // 读取保存的API地址
     const apiBase = wx.getStorageSync('apiBase') || '';
     const lastSync = wx.getStorageSync('lastCloudSync');
+    const autoSync = wx.getStorageSync('autoSync');
     
     this.setData({ 
       apiBase,
       localCount: words.getWords().length,
-      lastSyncTime: lastSync ? new Date(lastSync).toLocaleString() : '从未同步'
+      lastSyncTime: lastSync ? new Date(lastSync).toLocaleString() : '从未同步',
+      autoSync: autoSync !== false // 默认开启
     });
     api.setApiBase(apiBase);
   },
@@ -160,6 +163,17 @@ Page({
           });
         }
       }
+    });
+  },
+  
+  // 切换自动同步
+  toggleAutoSync(e) {
+    const autoSync = e.detail.value;
+    wx.setStorageSync('autoSync', autoSync);
+    this.setData({ autoSync });
+    wx.showToast({
+      title: autoSync ? '已开启自动同步' : '已关闭自动同步',
+      icon: 'success'
     });
   },
   
