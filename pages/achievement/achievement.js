@@ -28,5 +28,19 @@ Page({
     } catch (e) {
       this.setData({ isLoading: false });
     }
+  },
+  
+  // 刷新成就
+  refreshAchievements() {
+    this.loadAchievements();
+    wx.showToast({ title: '已刷新', icon: 'none' });
+  },
+  
+  // 分享成就
+  onShareAppMessage() {
+    return {
+      title: `我在词途已解锁${this.data.unlockedCount}个成就！`,
+      path: '/pages/achievement/achievement'
+    };
   }
 });

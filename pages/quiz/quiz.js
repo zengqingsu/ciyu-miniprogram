@@ -147,5 +147,20 @@ Page({
   // 返回
   goBack() {
     wx.navigateBack();
+  },
+  
+  // 分享成绩
+  onShareAppMessage() {
+    if (this.data.isComplete) {
+      const percent = Math.round(this.data.correctCount / this.data.questions.length * 100);
+      return {
+        title: `词途测试 ${this.data.correctCount}/${this.data.questions.length} (${percent}%)`,
+        path: '/pages/quiz/quiz'
+      };
+    }
+    return {
+      title: '词途能力测试',
+      path: '/pages/quiz/quiz'
+    };
   }
 });

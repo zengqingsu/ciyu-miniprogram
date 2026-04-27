@@ -232,5 +232,13 @@ Page({
       title: '测试提醒',
       icon: 'none'
     });
+  },
+  
+  // 分享学习计划
+  onShareAppMessage() {
+    return {
+      title: `我的词途计划：每天${this.data.dailyGoal}词，预计${this.data.daysLeft}天完成`,
+      path: '/pages/plan/plan'
+    };
   }
 });
