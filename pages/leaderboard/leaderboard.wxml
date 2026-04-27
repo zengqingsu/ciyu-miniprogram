@@ -1,0 +1,48 @@
+<!--pages/leaderboard/leaderboard.wxml-->
+<view class="leaderboard">
+  <!-- Tab 切换 -->
+  <view class="tabs">
+    <view 
+      class="tab {{currentTab === 'total' ? 'active' : ''}}" 
+      data-type="total"
+      bindtap="switchTab"
+    >总词汇量</view>
+    <view 
+      class="tab {{currentTab === 'streak' ? 'active' : ''}}" 
+      data-type="streak"
+      bindtap="switchTab"
+    >连续天数</view>
+    <view 
+      class="tab {{currentTab === 'today' ? 'active' : ''}}" 
+      data-type="today"
+      bindtap="switchTab"
+    >今日学习</view>
+  </view>
+
+  <!-- 我的排名 -->
+  <view class="my-rank" wx:if="{{myRank}}">
+    <text class="rank-label">我的排名</text>
+    <text class="rank-value">第 {{myRank.rank}} 名</text>
+  </view>
+
+  <!-- 排行榜列表 -->
+  <view class="rank-list">
+    <view 
+      class="rank-item {{index < 3 ? 'top-' + (index + 1) : ''}}" 
+      wx:for="{{list}}" 
+      wx:key="openId"
+      wx:for-index="index"
+    >
+      <view class="rank-num">{{index + 1}}</view>
+      <image class="avatar" src="{{item.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"/>
+      <view class="info">
+        <text class="nickname">{{item.nickName}}</text>
+        <text class="score">{{currentTab === 'streak' ? item.streak + '天' : currentTab === 'today' ? item.today + '个' : item.total + '个'}}</text>
+      </view>
+    </view>
+    
+    <view class="empty" wx:if="{{!loading && list.length === 0}}">
+      <text>暂无数据，快来学习吧！</text>
+    </view>
+  </view>
+</view>

@@ -13,7 +13,9 @@
     "pages/daily/daily",
     "pages/plan/plan",
     "pages/review/review",
-    "pages/listen/listen"
+    "pages/listen/listen",
+    "pages/leaderboard/leaderboard",
+    "pages/pk/pk"
   ],
   "window": {
     "navigationBarTitleText": "词途",

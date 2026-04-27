@@ -157,6 +157,22 @@ Page({
     });
   },
   
+  // 跳转到排行榜
+  goToLeaderboard() {
+    this.showNavigateToast('📊 排行榜');
+    wx.navigateTo({
+      url: '/pages/leaderboard/leaderboard'
+    });
+  },
+  
+  // 跳转到好友PK
+  goToPK() {
+    this.showNavigateToast('⚔️ 好友PK');
+    wx.navigateTo({
+      url: '/pages/pk/pk'
+    });
+  },
+  
   // 下拉刷新
   onPullDownRefresh() {
     this.loadData();

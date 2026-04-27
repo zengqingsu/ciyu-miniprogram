@@ -1,0 +1,18 @@
+<!--components/share-card/share-card.wxml-->
+<view class="share-card">
+  <canvas 
+    type="2d" 
+    id="share-card-canvas" 
+    class="card-canvas"
+    style="width: {{canvasWidth}}px; height: {{canvasHeight}}px;"
+  ></canvas>
+  
+  <view class="share-buttons" wx:if="{{generatedImage}}">
+    <button class="btn-share" open-type="share" bindtap="onShareAppMessage">
+      分享到微信好友
+    </button>
+    <button class="btn-share" bindtap="shareToFriend">
+      生成分享图片
+    </button>
+  </view>
+</view>
