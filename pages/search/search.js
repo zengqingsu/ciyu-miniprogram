@@ -84,5 +84,25 @@ Page({
     } else {
       wx.showToast({ title: '已在生词本', icon: 'none' });
     }
+  },
+  
+  // 清空输入
+  clearInput() {
+    this.setData({ keyword: '', results: [], searched: false });
+  },
+  
+  // 查看历史记录
+  onHistoryTap(e) {
+    const word = e.currentTarget.dataset.word;
+    this.setData({ keyword: word });
+    this.onSearch();
+  },
+  
+  // 分享
+  onShareAppMessage() {
+    return {
+      title: '词途单词搜索',
+      path: '/pages/search/search'
+    };
   }
 });

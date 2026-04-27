@@ -84,5 +84,48 @@ Page({
         }
       }
     });
+  },
+  
+  // 导出生词本
+  exportNotebook() {
+    const notebook = words.getNotebook();
+    if (notebook.length === 0) {
+      wx.showToast({ title: '生词本为空', icon: 'none' });
+      return;
+    }
+    
+    const text = notebook.map(w => `${w.word} - ${w.meaning}`).join('\n');
+    wx.setClipboardData({
+      data: text,
+      success: () => {
+        wx.showToast({ title: '已复制到剪贴板', icon: 'success' });
+      }
+    });
+  },
+  
+  // 搜索生词本
+  onSearchInput(e) {
+    const keyword = e.detail.value.toLowerCase();
+    const allWords = words.getNotebook();
+    
+    if (!keyword) {
+      this.setData({ notebook: allWords });
+      return;
+    }
+    
+    const filtered = allWords.filter(w => 
+      w.word.toLowerCase().includes(keyword) || 
+      w.meaning.toLowerCase().includes(keyword)
+    );
+    this.setData({ notebook: filtered });
+  },
+  
+  // 分享生词本
+  onShareAppMessage() {
+    const stats = words.getNotebook();
+    return {
+      title: `我的词途生词本 - ${stats.length}个单词`,
+      path: '/pages/notebook/notebook'
+    };
   }
 });

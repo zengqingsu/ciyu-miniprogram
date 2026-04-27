@@ -5,8 +5,27 @@
     <text class="subtitle">听读音，选单词</text>
   </view>
   
+  <!-- 题目数量选择 -->
+  <view class="count-selector">
+    <text class="selector-label">题目数量:</text>
+    <view class="selector-btns">
+      <text 
+        class="selector-btn {{totalQuestions === item ? 'active' : ''}}" 
+        wx:for="{{questionCountOptions}}" 
+        wx:key="*this"
+        bindtap="changeQuestionCount" 
+        data-count="{{item}}">{{item}}题</text>
+    </view>
+  </view>
+  
   <!-- 当前题目 -->
   <view class="question-section" wx:if="{{currentQuestion && !isComplete}}">
+    <!-- 进度显示 -->
+    <view class="progress">
+      <text>{{currentIndex + 1}} / {{totalQuestions}}</text>
+      <text class="correct-count">正确: {{correctCount}}</text>
+    </view>
+    
     <view class="play-btn" bindtap="playAudio">
       <text class="play-icon">🔊</text>
       <text class="play-text">点击播放</text>

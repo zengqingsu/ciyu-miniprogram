@@ -29,5 +29,24 @@ Page({
       totalCount: tasks.length,
       today
     });
+  },
+  
+  // 刷新任务
+  refreshTasks() {
+    this.loadTasks();
+    wx.showToast({ title: '已刷新', icon: 'none' });
+  },
+  
+  // 跳转学习
+  goToLearn() {
+    wx.switchTab({ url: '/pages/learn/learn' });
+  },
+  
+  // 分享成就
+  onShareAppMessage() {
+    return {
+      title: `今日完成${this.data.completedCount}/${this.data.totalCount}个任务`,
+      path: '/pages/daily/daily'
+    };
   }
 });

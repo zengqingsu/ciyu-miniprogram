@@ -7,6 +7,7 @@ Page({
     currentIndex: 0,
     currentQuestion: null,
     totalQuestions: 5,
+    questionCountOptions: [5, 10, 15, 20],
     showOptions: false,
     selectedIndex: -1,
     isCorrect: false,
@@ -18,6 +19,19 @@ Page({
   },
   
   onLoad() {
+    // 读取设置的题目数量
+    const savedCount = wx.getStorageSync('listenQuestionCount');
+    if (savedCount) {
+      this.setData({ totalQuestions: savedCount });
+    }
+    this.generateQuestions();
+  },
+  
+  // 切换题目数量
+  changeQuestionCount(e) {
+    const count = e.currentTarget.dataset.count;
+    this.setData({ totalQuestions: count });
+    wx.setStorageSync('listenQuestionCount', count);
     this.generateQuestions();
   },
   
@@ -107,5 +121,14 @@ Page({
   
   goBack() {
     wx.navigateBack();
+  },
+  
+  // 分享成绩
+  onShareAppMessage() {
+    const percent = Math.round(this.data.correctCount / this.data.totalQuestions * 100);
+    return {
+      title: `听力练习 ${this.data.correctCount}/${this.data.totalQuestions} (${percent}%)`,
+      path: '/pages/listen/listen'
+    };
   }
 });

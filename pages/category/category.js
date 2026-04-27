@@ -81,5 +81,19 @@ Page({
     wx.navigateTo({
       url: '/pages/learn/learn?mode=category'
     });
+  },
+  
+  // 刷新分类
+  refreshCategories() {
+    this.loadCategories();
+    wx.showToast({ title: '已刷新', icon: 'none' });
+  },
+  
+  // 分享
+  onShareAppMessage() {
+    return {
+      title: '词途分类学习 - 按主题背单词',
+      path: '/pages/category/category'
+    };
   }
 });

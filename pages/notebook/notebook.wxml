@@ -16,6 +16,16 @@
     </view>
   </view>
   
+  <!-- 搜索栏 -->
+  <view class="search-bar" wx:if="{{notebook.length > 0}}">
+    <input class="search-input" placeholder="搜索单词..." bindinput="onSearchInput" />
+  </view>
+  
+  <!-- 操作按钮 -->
+  <view class="action-btns" wx:if="{{notebook.length > 0}}">
+    <button class="export-btn" bindtap="exportNotebook">📋 导出</button>
+  </view>
+  
   <!-- 分类筛选 -->
   <view class="filter-bar" wx:if="{{categories.length > 0}}">
     <text class="filter-tag {{!filterCategory ? 'active' : ''}}" bindtap="onFilterChange" data-category="">全部</text>

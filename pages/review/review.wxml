@@ -70,5 +70,6 @@
   <!-- 底部按钮 -->
   <view class="bottom-actions" wx:if="{{unknownWords.length > 0}}">
     <button class="review-all-btn" bindtap="reviewAll">开始复习</button>
+    <button class="shuffle-btn" bindtap="shuffleWords">打乱顺序</button>
   </view>
 </view>

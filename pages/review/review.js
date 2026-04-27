@@ -111,7 +111,35 @@ Page({
   },
   
   resetReview() {
-    wx.removeStorageSync('reviewList');
-    this.loadReviewData();
+    wx.showModal({
+      title: '重置复习',
+      content: '确定要重置所有复习记录吗？',
+      success: (res) => {
+        if (res.confirm) {
+          wx.removeStorageSync('reviewList');
+          this.loadReviewData();
+          wx.showToast({ title: '已重置', icon: 'success' });
+        }
+      }
+    });
+  },
+  
+  // 随机排序
+  shuffleWords() {
+    const unknownWords = [...this.data.unknownWords];
+    for (let i = unknownWords.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [unknownWords[i], unknownWords[j]] = [unknownWords[j], unknownWords[i]];
+    }
+    this.setData({ unknownWords });
+    wx.showToast({ title: '已打乱', icon: 'none' });
+  },
+  
+  // 分享复习成就
+  onShareAppMessage() {
+    return {
+      title: `我在词途复习了${this.data.reviewedCount}个单词！`,
+      path: '/pages/review/review'
+    };
   }
 });

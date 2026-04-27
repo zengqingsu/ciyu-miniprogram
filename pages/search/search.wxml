@@ -3,6 +3,7 @@
   <!-- 搜索框 -->
   <view class="search-box">
     <input class="search-input" placeholder="搜索单词..." value="{{keyword}}" bindinput="onInput" bindconfirm="onSearch" />
+    <text class="clear-input" wx:if="{{keyword}}" bindtap="clearInput">✕</text>
     <button class="search-btn" bindtap="onSearch" loading="{{isLoading}}">搜索</button>
   </view>
   
