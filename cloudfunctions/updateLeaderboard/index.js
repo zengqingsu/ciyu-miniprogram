@@ -6,15 +6,15 @@ const db = cloud.database();
 
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext();
-  const { openId, nickName, avatarUrl, total, streak, today } = event;
+  // 优先使用 wxContext 的 OPENID，确保数据归属正确
+  const openId = wxContext.OPENID;
+  const { nickName, avatarUrl, total, streak, today } = event;
   
   try {
-    // 获取当前排行榜数据
     const leaderboardDoc = await db.collection('leaderboard').doc('global').get();
     
     let users = leaderboardDoc.data.users || [];
     
-    // 更新用户数据
     const userIndex = users.findIndex(u => u.openId === openId);
     
     const userData = {
@@ -33,12 +33,10 @@ exports.main = async (event, context) => {
       users.push(userData);
     }
     
-    // 按不同维度排序
     const sortedByTotal = [...users].sort((a, b) => b.total - a.total).slice(0, 100);
     const sortedByStreak = [...users].sort((a, b) => b.streak - a.streak).slice(0, 100);
     const sortedByToday = [...users].sort((a, b) => b.today - a.today).slice(0, 100);
     
-    // 更新数据库
     await db.collection('leaderboard').doc('global').set({
       data: {
         users,
@@ -58,7 +56,6 @@ exports.main = async (event, context) => {
       }
     };
   } catch (err) {
-    // 首次创建排行榜
     if (err.code === 'DOC_NOT_EXIST') {
       const userData = {
         openId,

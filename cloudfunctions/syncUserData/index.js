@@ -1,9 +1,8 @@
 // 云函数：syncUserData
 const cloud = require('wx-server-sdk');
-cloud.init();
+cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 
 const db = cloud.database();
-const _ = db.command;
 
 /**
  * 同步用户学习数据
@@ -13,7 +12,6 @@ exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext();
   const openId = wxContext.OPENID;
   
-  // 接收的客户端数据
   const userData = event.userData;
   
   if (!userData) {
@@ -21,7 +19,6 @@ exports.main = async (event, context) => {
   }
   
   try {
-    // 查询是否已有数据
     const existing = await db.collection('userData').where({
       _openId: openId
     }).get();
@@ -32,12 +29,10 @@ exports.main = async (event, context) => {
     userData._updateTime = now;
     
     if (existing.data && existing.data.length > 0) {
-      // 更新现有数据
       await db.collection('userData').doc(existing.data[0]._id).update({
         data: userData
       });
     } else {
-      // 创建新数据
       userData._createTime = now;
       await db.collection('userData').add({
         data: userData

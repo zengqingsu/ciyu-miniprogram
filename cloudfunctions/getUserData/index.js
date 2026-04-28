@@ -1,9 +1,8 @@
 // 云函数：getUserData
 const cloud = require('wx-server-sdk');
-cloud.init();
+cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 
 const db = cloud.database();
-const _ = db.command;
 
 /**
  * 获取用户云端数据
@@ -14,7 +13,6 @@ exports.main = async (event, context) => {
   const openId = wxContext.OPENID;
   
   try {
-    // 查询用户数据
     const result = await db.collection('userData').where({
       _openId: openId
     }).get();
