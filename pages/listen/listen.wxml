@@ -1,10 +1,16 @@
-<!--pages/listen/listen.wxml-->
+<!-- pages/listen/listen.wxml -->
 <view class="container">
   <view class="header">
-    <text class="title">听力练习</text>
-    <text class="subtitle">听读音，选单词</text>
+    <text class="title">{{mode === 'speak' ? '语音评测' : '听力练习'}}</text>
+    <text class="subtitle">{{mode === 'speak' ? '朗读单词，跟读评测' : '听读音，选单词'}}</text>
   </view>
-  
+
+  <!-- 模式切换 -->
+  <view class="mode-selector">
+    <view class="mode-item {{mode === 'listen' ? 'active' : ''}}" bindtap="changeMode" data-mode="listen">听力模式</view>
+    <view class="mode-item {{mode === 'speak' ? 'active' : ''}}" bindtap="changeMode" data-mode="speak">语音评测</view>
+  </view>
+
   <!-- 题目数量选择 -->
   <view class="count-selector">
     <text class="selector-label">题目数量:</text>
@@ -17,57 +23,93 @@
         data-count="{{item}}">{{item}}题</text>
     </view>
   </view>
-  
+
   <!-- 当前题目 -->
   <view class="question-section" wx:if="{{currentQuestion && !isComplete}}">
-    <!-- 进度显示 -->
+    <!-- 进度 -->
     <view class="progress">
       <text>{{currentIndex + 1}} / {{totalQuestions}}</text>
       <text class="correct-count">正确: {{correctCount}}</text>
     </view>
-    
-    <view class="play-btn" bindtap="playAudio">
-      <text class="play-icon">🔊</text>
-      <text class="play-text">点击播放</text>
+
+    <!-- 单词显示 -->
+    <view class="word-display">
+      <text class="word-pronunciation">{{currentQuestion.pronunciation}}</text>
+      <text class="word-meaning">{{currentQuestion.meaning}}</text>
     </view>
-    
-    <!-- 选项 -->
-    <view class="options" wx:if="{{showOptions}}">
-      <button 
-        class="option {{selectedIndex === index ? (isCorrect ? 'correct' : 'wrong') : (isCorrect && item === currentQuestion.word ? 'correct' : '')}}"
-        wx:for="{{currentQuestion.options}}" 
-        wx:key="index"
-        bindtap="selectAnswer" 
-        data-answer="{{item}}"
-        disabled="{{answered}}">
-        {{item}}
-      </button>
+
+    <!-- 听力模式操作 -->
+    <view class="listen-actions" wx:if="{{mode === 'listen'}}">
+      <view class="play-btn" bindtap="playAudio">
+        <text class="play-icon">🔊</text>
+        <text class="play-text">播放发音</text>
+      </view>
+
+      <!-- 选项 -->
+      <view class="options" wx:if="{{showOptions}}">
+        <button 
+          class="option {{selectedIndex === index ? (isCorrect ? 'correct' : 'wrong') : (isCorrect && item === currentQuestion.word ? 'correct' : '')}}"
+          wx:for="{{currentQuestion.options}}" 
+          wx:key="index"
+          bindtap="selectAnswer" 
+          data-answer="{{item}}"
+          disabled="{{answered}}">
+          {{item}}
+        </button>
+      </view>
+
+      <view class="hint" wx:if="{{!showOptions}}">
+        <button class="hint-btn" bindtap="showOptionsBtn">显示选项</button>
+      </view>
     </view>
-    
-    <!-- 提示 -->
-    <view class="hint" wx:if="{{!showOptions}}">
-      <button class="hint-btn" bindtap="showOptionsBtn">显示选项</button>
+
+    <!-- 语音评测模式操作 -->
+    <view class="speak-actions" wx:if="{{mode === 'speak'}}">
+      <view class="record-area">
+        <view class="target-word">{{currentQuestion.word}}</view>
+        <view class="record-btn {{isRecording ? 'recording' : ''}}" bindtap="{{isRecording ? 'stopRecording' : 'startRecording'}}">
+          <text class="record-icon">{{isRecording ? '⏹' : '🎤'}}</text>
+          <text class="record-text">{{isRecording ? '录音中...' : '开始朗读'}}</text>
+        </view>
+      </view>
+
+      <!-- 评测结果 -->
+      <view class="assessment-result" wx:if="{{showAssessment && assessmentResult}}">
+        <view class="score-circle">
+          <text class="score-value">{{assessmentResult.score}}</text>
+          <text class="score-label">评分</text>
+        </view>
+        <view class="feedback">
+          <text class="feedback-text">{{assessmentResult.feedback.text}}</text>
+          <text class="feedback-suggestion">{{assessmentResult.feedback.suggestion}}</text>
+        </view>
+        <view class="details">
+          <text>流利度: {{assessmentResult.details.fluency}}</text>
+          <text>准确度: {{assessmentResult.details.accuracy}}</text>
+          <text>完整度: {{assessmentResult.details.completeness}}</text>
+        </view>
+      </view>
     </view>
-    
+
     <!-- 下一题 -->
-    <view class="next-btn" wx:if="{{answered}}">
+    <view class="next-btn" wx:if="{{(mode === 'listen' && answered) || (mode === 'speak' && showAssessment)}}">
       <button bindtap="nextQuestion">{{currentIndex < totalQuestions - 1 ? '下一题' : '查看结果'}}</button>
     </view>
   </view>
-  
+
   <!-- 完成页面 -->
   <view class="complete-section" wx:if="{{isComplete}}">
     <text class="complete-icon">🎉</text>
-    <text class="complete-title">练习完成！</text>
-    
+    <text class="complete-title">{{mode === 'speak' ? '评测完成！' : '练习完成！'}}</text>
+
     <view class="score-card">
       <text class="score">{{correctCount}}</text>
       <text class="score-label">正确 / {{totalQuestions}}</text>
       <text class="score-percent">{{Math.round(correctCount / totalQuestions * 100)}}%</text>
     </view>
-    
+
     <view class="complete-actions">
-      <button class="retry-btn" bindtap="retryQuiz">重新练习</button>
+      <button class="retry-btn" bindtap="retryQuiz">再来一组</button>
       <button class="back-btn" bindtap="goBack">返回</button>
     </view>
   </view>

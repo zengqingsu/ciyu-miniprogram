@@ -15,7 +15,9 @@
     "pages/review/review",
     "pages/listen/listen",
     "pages/leaderboard/leaderboard",
-    "pages/pk/pk"
+    "pages/pk/pk",
+    "pages/radar/radar",
+    "pages/trend/trend"
   ],
   "window": {
     "navigationBarTitleText": "词途",
