@@ -17,7 +17,8 @@
     "pages/leaderboard/leaderboard",
     "pages/pk/pk",
     "pages/radar/radar",
-    "pages/trend/trend"
+    "pages/trend/trend",
+    "pages/export/export"
   ],
   "window": {
     "navigationBarTitleText": "词途",

@@ -46,7 +46,7 @@
 }
 
 .test-btn, .sync-btn {
-  background: #1890ff;
+  background: #667eea;
   color: #fff;
   border-radius: 8rpx;
   margin-bottom: 15rpx;
@@ -59,36 +59,48 @@
   margin-top: 15rpx;
 }
 
-.sync-info {
+.sync-info, .network-status, .storage-info {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20rpx;
+  flex-wrap: wrap;
 }
 
-.sync-info text {
+.sync-info text,
+.network-status text,
+.storage-info text {
   font-size: 26rpx;
   color: #666;
+  margin-right: 20rpx;
 }
 
 .clear-btn {
-  background: #ff4d4f;
+  background: #ff6b6b;
   color: #fff;
 }
 
-.cloud-sync-btn {
-  background: #1890ff;
+.cloud-sync-btn, .smart-sync-btn {
+  background: #667eea;
   color: #fff;
-  margin-bottom: 20rpx;
+  margin-right: 10rpx;
+  flex: 1;
 }
 
 .view-cloud-btn {
-  background: #722ed1;
+  background: #764ba2;
   color: #fff;
   margin-bottom: 20rpx;
 }
 
+.export-btn {
+  background: #4caf50;
+  color: #fff;
+  margin-right: 10rpx;
+  flex: 1;
+}
+
 .status {
-  color: #1890ff;
+  color: #667eea;
   font-weight: bold;
 }
 
@@ -104,4 +116,56 @@
 .save-btn text {
   font-size: 32rpx;
   font-weight: bold;
+}
+
+/* v1.8 新样式 */
+.switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.switch-row:last-child {
+  border-bottom: none;
+}
+
+.switch-label {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.button-row {
+  display: flex;
+  gap: 10rpx;
+  margin: 20rpx 0;
+}
+
+.network-status {
+  background: #f8f9fa;
+  padding: 20rpx;
+  border-radius: 8rpx;
+  margin-bottom: 20rpx;
+}
+
+.picker-value {
+  font-size: 28rpx;
+  color: #667eea;
+  font-weight: bold;
+}
+
+.storage-info {
+  background: #f8f9fa;
+  padding: 20rpx;
+  border-radius: 8rpx;
+  margin: 20rpx 0;
+}
+
+.version-info {
+  display: block;
+  font-size: 28rpx;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 10rpx;
 }

@@ -1,0 +1,115 @@
+/* pages/export/export.wxss */
+.container {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding: 20rpx;
+}
+
+/* 统计卡片 */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16rpx;
+  padding: 30rpx;
+  text-align: center;
+  color: #fff;
+}
+
+.stat-value {
+  display: block;
+  font-size: 48rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.stat-label {
+  display: block;
+  font-size: 24rpx;
+  opacity: 0.9;
+}
+
+/* 同步区域 */
+.sync-section {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.sync-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.sync-info text {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.sync-btn {
+  background: #667eea;
+  color: #fff;
+}
+
+/* 导出区域 */
+.export-section {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.section-desc {
+  display: block;
+  font-size: 26rpx;
+  color: #999;
+  margin-bottom: 20rpx;
+}
+
+.export-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  font-weight: bold;
+}
+
+/* 危险操作区域 */
+.danger-section {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  border: 1rpx solid #ff6b6b;
+}
+
+.clear-btn {
+  background: #ff6b6b;
+  color: #fff;
+}
+
+/* 版本信息 */
+.version-section {
+  text-align: center;
+  padding: 40rpx;
+  color: #999;
+}
+
+.version-section text {
+  display: block;
+  font-size: 24rpx;
+  margin-bottom: 10rpx;
+}

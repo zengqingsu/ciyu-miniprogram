@@ -1,5 +1,6 @@
 <!--pages/settings/settings.wxml-->
 <view class="container">
+  <!-- API设置 -->
   <view class="section">
     <text class="section-title">API设置</text>
     <view class="input-group">
@@ -9,12 +10,14 @@
     </view>
   </view>
 
+  <!-- 测试连接 -->
   <view class="section">
     <text class="section-title">测试连接</text>
     <button class="test-btn" bindtap="testApi" loading="{{testing}}">测试API连接</button>
     <text class="result" wx:if="{{testResult}}">{{testResult}}</text>
   </view>
 
+  <!-- 单词同步 -->
   <view class="section">
     <text class="section-title">单词同步</text>
     <view class="sync-info">
@@ -24,27 +27,80 @@
     <button class="sync-btn" bindtap="syncWords" loading="{{syncing}}">同步单词数据</button>
   </view>
 
+  <!-- 云同步 -->
   <view class="section">
     <text class="section-title">云同步 ⭐</text>
     <view class="sync-info">
       <text>上次同步: {{lastSyncTime}}</text>
       <text class="status">{{syncStatus}}</text>
     </view>
-    <switch class="auto-sync-switch" checked="{{autoSync}}" bindchange="toggleAutoSync" />
-    <text class="switch-label">自动同步</text>
-    <button class="cloud-sync-btn" bindtap="manualCloudSync" loading="{{cloudSyncing}}">
-      立即云同步
-    </button>
-    <button class="view-cloud-btn" bindtap="viewCloudData">
-      查看云端数据
-    </button>
+    <view class="switch-row">
+      <switch class="auto-sync-switch" checked="{{autoSync}}" bindchange="toggleAutoSync" />
+      <text class="switch-label">自动同步</text>
+    </view>
+    <view class="button-row">
+      <button class="cloud-sync-btn" bindtap="manualCloudSync" loading="{{cloudSyncing}}">立即同步</button>
+      <button class="smart-sync-btn" bindtap="smartSync" loading="{{cloudSyncing}}">智能同步</button>
+    </view>
+    <button class="view-cloud-btn" bindtap="viewCloudData">查看云端数据</button>
     <text class="hint">云同步会自动保存您的学习进度到云端，更换设备也能继续学习</text>
   </view>
 
+  <!-- v1.8 离线与网络设置 -->
+  <view class="section">
+    <text class="section-title">📡 网络与离线</text>
+    <view class="network-status">
+      <text>当前网络: {{networkStatus}}</text>
+      <text>设备类型: {{deviceType}}</text>
+    </view>
+    <view class="switch-row">
+      <switch checked="{{offlineMode}}" bindchange="toggleOfflineMode" />
+      <text class="switch-label">离线模式</text>
+    </view>
+    <view class="switch-row">
+      <switch checked="{{syncOnWifiOnly}}" bindchange="toggleWifiOnly" />
+      <text class="switch-label">仅WiFi同步</text>
+    </view>
+    <view class="storage-info">
+      <text>存储使用: {{storageUsage.totalSizeKB || 0}} KB</text>
+      <text>待同步: {{pendingChanges}} 条</text>
+    </view>
+    <text class="hint">离线模式下将使用本地数据，适合网络不稳定时使用</text>
+  </view>
+
+  <!-- v1.8 夜间模式 -->
+  <view class="section">
+    <text class="section-title">🌙 显示与主题</text>
+    <view class="switch-row">
+      <text class="switch-label">夜间模式</text>
+      <picker bindchange="toggleNightMode" value="{{nightModeOptions.indexOf(nightMode)}}" range="{{nightModeOptions}}">
+        <view class="picker-value">{{nightMode}} ▾</view>
+      </picker>
+    </view>
+    <text class="hint">自动模式会根据时间自动切换（22:00-06:00）</text>
+  </view>
+
+  <!-- v1.8 数据管理 -->
+  <view class="section">
+    <text class="section-title">💾 数据管理</text>
+    <view class="button-row">
+      <button class="export-btn" bindtap="exportOfflineData">导出数据</button>
+      <button class="clear-btn" bindtap="clearOfflineData">清除离线数据</button>
+    </view>
+  </view>
+
+  <!-- 缓存管理 -->
   <view class="section">
     <text class="section-title">缓存管理</text>
     <text class="hint" style="margin-bottom: 20rpx;">清除缓存不会影响您的学习记录</text>
     <button class="clear-btn" bindtap="clearCache">清除缓存</button>
+  </view>
+
+  <!-- 版本信息 -->
+  <view class="section">
+    <text class="section-title">关于</text>
+    <text class="version-info">词途小程序 v1.8</text>
+    <text class="hint">离线学习 · 智能同步 · 夜间模式</text>
   </view>
 
   <view class="save-btn" bindtap="saveSettings">
